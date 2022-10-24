@@ -19,6 +19,12 @@
     <properties>
         <java.version>11</java.version>
         <nsq.client.version>1.4</nsq.client.version>
+        <mybatis.version>2.2.2</mybatis.version>
+        <mysql.version>8.0.31</mysql.version>
+        <druid.version>1.2.14</druid.version>
+        <fastjson.version>2.0.16</fastjson.version>
+        <guava.version>31.1-jre</guava.version>
+        <lang3.version>3.12.0</lang3.version>
     </properties>
 
     <dependencies>
@@ -40,6 +46,36 @@
             <groupId>com.sproutsocial</groupId>
             <artifactId>nsq-j</artifactId>
             <version>${nsq.client.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.mybatis.spring.boot</groupId>
+            <artifactId>mybatis-spring-boot-starter</artifactId>
+            <version>${mybatis.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.mysql</groupId>
+            <artifactId>mysql-connector-j</artifactId>
+            <version>${mysql.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>druid</artifactId>
+            <version>${druid.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.alibaba.fastjson2</groupId>
+            <artifactId>fastjson2</artifactId>
+            <version>${fastjson.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>${guava.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>${lang3.version}</version>
         </dependency>
     </dependencies>
 
