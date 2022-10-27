@@ -12,9 +12,11 @@ import java.util.List;
 public interface ComponentDAO {
 
     /**
+     * get all component
+     *
      * @date 2022/10/24 15:45
      * @author huangchenguang
-     * @desc get all component
+     * @return component list
      */
     List<ComponentDTO> getAllComponent();
 

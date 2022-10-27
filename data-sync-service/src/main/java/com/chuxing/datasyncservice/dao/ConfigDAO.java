@@ -13,9 +13,12 @@ import java.util.List;
 public interface ConfigDAO {
 
     /**
+     * get by component id
+     *
      * @date 2022/10/24 15:45
      * @author huangchenguang
-     * @desc get by component id
+     * @param componentId component id
+     * @return config list
      */
     List<ConfigDTO> getByComponentId(@Param("componentId") Long componentId);
 

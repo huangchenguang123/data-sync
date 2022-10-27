@@ -13,7 +13,7 @@ import java.util.Objects;
  * @desc nsq source
  */
 @Data
-public class NsqSource extends Source {
+public class NsqSource extends BaseSource {
 
     /**
      * @date 2022/10/20 17:29
@@ -48,7 +48,7 @@ public class NsqSource extends Source {
      * @author huangchenguang
      * @desc init source
      */
-    public static Source init(String config) {
+    public static BaseSource init(String config) {
         return JSON.parseObject(config, NsqSource.class);
     }
 

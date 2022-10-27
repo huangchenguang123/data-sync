@@ -9,7 +9,7 @@ import lombok.Data;
  * @desc the source is the entry point to the data
  */
 @Data
-public abstract class Source {
+public abstract class BaseSource {
 
     protected String type;
 
@@ -18,15 +18,27 @@ public abstract class Source {
      * @author huangchenguang
      * @desc init source
      */
-    public static Source init(String subType, String config) {
+    public static BaseSource init(String subType, String config) {
         if (SourceEnum.NSQ_SOURCE.getName().equals(subType)) {
             return NsqSource.init(config);
         }
         return null;
     }
 
+    /**
+     * start source
+     *
+     * @date 2022/10/25 15:42
+     * @author huangchenguang
+     */
     public abstract void start();
 
+    /**
+     * stop source
+     *
+     * @date 2022/10/25 15:42
+     * @author huangchenguang
+     */
     public abstract void stop();
 
 

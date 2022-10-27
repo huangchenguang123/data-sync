@@ -5,7 +5,7 @@ import com.chuxing.datasyncservice.dao.ConfigDAO;
 import com.chuxing.datasyncservice.model.dto.ComponentDTO;
 import com.chuxing.datasyncservice.model.dto.ConfigDTO;
 import com.chuxing.datasyncservice.model.enums.ComponentEnum;
-import com.chuxing.datasyncservice.service.component.source.Source;
+import com.chuxing.datasyncservice.service.component.source.BaseSource;
 import com.google.common.collect.Lists;
 import org.springframework.stereotype.Component;
 
@@ -41,7 +41,7 @@ public class ComponentManager {
     @Resource
     private ConfigDAO configDAO;
 
-    private List<Source> sources;
+    private List<BaseSource> sources;
 
     /**
      * @date 2022/10/24 16:21
@@ -73,7 +73,7 @@ public class ComponentManager {
             }
             if (configMap.containsKey(ComponentEnum.SOURCE.getName())) {
                 ConfigDTO config = configMap.get(ComponentEnum.SOURCE.getName());
-                Source source = Source.init(config.getSubType(), config.getConfig());
+                BaseSource source = BaseSource.init(config.getSubType(), config.getConfig());
                 if (Objects.nonNull(source)) {
                     sources.add(source);
                 }
@@ -87,7 +87,7 @@ public class ComponentManager {
      * @desc start source
      */
     private void startSource() {
-        sources.forEach(Source::start);
+        sources.forEach(BaseSource::start);
     }
 
 }
