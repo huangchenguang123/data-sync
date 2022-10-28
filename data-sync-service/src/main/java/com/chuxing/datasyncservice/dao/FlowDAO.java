@@ -1,24 +1,24 @@
 package com.chuxing.datasyncservice.dao;
 
-import com.chuxing.datasyncservice.model.dto.ComponentDTO;
+import com.chuxing.datasyncservice.model.dto.FlowDTO;
 
 import java.util.List;
 
 /**
  * @date 2022/10/24 15:53
  * @author huangchenguang
- * @desc ComponentDAO
+ * @desc FlowDAO
  */
-public interface ComponentDAO {
+public interface FlowDAO {
 
     /**
-     * get all component
+     * get all config
      *
      * @date 2022/10/24 15:45
      * @author huangchenguang
-     * @return component list
+     * @return flow list
      */
-    List<ComponentDTO> getAllComponent();
+    List<FlowDTO> getAllFlow();
 
 }
 

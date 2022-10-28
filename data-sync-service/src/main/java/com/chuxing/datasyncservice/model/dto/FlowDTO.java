@@ -5,19 +5,19 @@ import lombok.Data;
 import java.io.Serializable;
 
 /**
- * @date 2022/10/24 15:38
+ * @date 2022/10/24 15:29
  * @author huangchenguang
- * @desc ComponentDTO
+ * @desc FlowDTO
  */
 @Data
-public class ComponentDTO implements Serializable {
+public class FlowDTO implements Serializable {
 
     /**
-     * @date 2022/10/24 15:38
+     * @date 2022/10/24 15:30
      * @author huangchenguang
-     * @desc serialVersionUID
+     * @desc Serializable
      */
-    private static final long serialVersionUID = 9186595410153455021L;
+    private static final long serialVersionUID = 6736105630640446239L;
 
     /**
      * @date 2022/10/24 15:34
@@ -29,9 +29,23 @@ public class ComponentDTO implements Serializable {
     /**
      * @date 2022/10/24 15:34
      * @author huangchenguang
-     * @desc name
+     * @desc flow name
      */
-    private String name;
+    private String flowName;
+
+    /**
+     * @date 2022/10/24 15:34
+     * @author huangchenguang
+     * @desc config
+     */
+    private String config;
+
+    /**
+     * @date 2022/10/24 15:34
+     * @author huangchenguang
+     * @desc enable
+     */
+    private Boolean enable;
 
     /**
      * @date 2022/10/24 15:34

@@ -1,9 +1,9 @@
 package com.chuxing.datasyncservice.service.component.source;
 
 import com.alibaba.fastjson2.JSON;
+import com.chuxing.datasyncservice.model.config.ComponentConfig;
 import com.sproutsocial.nsq.Message;
 import com.sproutsocial.nsq.Subscriber;
-import lombok.Data;
 
 import java.util.Objects;
 
@@ -12,7 +12,6 @@ import java.util.Objects;
  * @author huangchenguang
  * @desc nsq source
  */
-@Data
 public class NsqSource extends BaseSource {
 
     /**
@@ -48,8 +47,8 @@ public class NsqSource extends BaseSource {
      * @author huangchenguang
      * @desc init source
      */
-    public static BaseSource init(String config) {
-        return JSON.parseObject(config, NsqSource.class);
+    public static BaseSource init(ComponentConfig config) {
+        return JSON.parseObject(JSON.toJSONString(config.getConfig()), NsqSource.class);
     }
 
     /**

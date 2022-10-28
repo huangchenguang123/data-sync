@@ -25,6 +25,7 @@
         <fastjson.version>2.0.16</fastjson.version>
         <guava.version>31.1-jre</guava.version>
         <lang3.version>3.12.0</lang3.version>
+        <rule.version>3.3.0</rule.version>
     </properties>
 
     <dependencies>
@@ -76,6 +77,11 @@
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
             <version>${lang3.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>QLExpress</artifactId>
+            <version>${rule.version}</version>
         </dependency>
     </dependencies>
 
