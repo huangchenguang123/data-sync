@@ -1,10 +1,12 @@
 package com.chuxing.datasyncservice.service.component.source;
 
 import com.alibaba.fastjson2.JSON;
+import com.alibaba.fastjson2.TypeReference;
 import com.chuxing.datasyncservice.model.config.ComponentConfig;
 import com.sproutsocial.nsq.Message;
 import com.sproutsocial.nsq.Subscriber;
 
+import java.util.Map;
 import java.util.Objects;
 
 /**
@@ -80,7 +82,8 @@ public class NsqSource extends BaseSource {
      * @desc handle Data
      */
     public void handleData(Message message) {
-        System.out.println("Received:" + new String(message.getData()));
+        Map<String, Object> data = JSON.parseObject(new String(message.getData()), new TypeReference<Map<String, Object>>() {});
+        run(data);
         message.finish();
     }
 

@@ -1,7 +1,8 @@
 package com.chuxing.datasyncservice.service.component.channel;
 
 import com.chuxing.datasyncservice.model.config.ComponentConfig;
-import com.chuxing.datasyncservice.model.config.FlowConfig;
+import com.chuxing.datasyncservice.model.enums.ChannelEnum;
+import lombok.Getter;
 
 import java.util.Map;
 
@@ -10,7 +11,22 @@ import java.util.Map;
  * @author huangchenguang
  * @desc BaseChannel
  */
+@Getter
 public abstract class BaseChannel {
+
+    /**
+     * @date 2022/11/7 15:32
+     * @author huangchenguang
+     * @desc channelId
+     */
+    protected Integer channelId;
+
+    /**
+     * @date 2022/11/7 15:32
+     * @author huangchenguang
+     * @desc preChannelId
+     */
+    protected Integer preChannelId;
 
     /**
      * @date 2022/10/20 17:27
@@ -18,6 +34,9 @@ public abstract class BaseChannel {
      * @desc init source
      */
     public static BaseChannel init(ComponentConfig config) {
+        if (config.getType().equals(ChannelEnum.EXPRESS_CHANNEL.getName())) {
+            return ExpressChannel.init(config);
+        }
         return null;
     }
 

@@ -1,5 +1,7 @@
 package com.chuxing.datasyncservice.service.component.channel;
 
+import com.alibaba.fastjson2.JSON;
+import com.chuxing.datasyncservice.model.config.ComponentConfig;
 import com.ql.util.express.DefaultContext;
 import com.ql.util.express.ExpressRunner;
 
@@ -33,6 +35,15 @@ public class ExpressChannel extends BaseChannel {
      * @desc qle script
      */
     private String script;
+
+    /**
+     * @date 2022/11/7 15:18
+     * @author huangchenguang
+     * @desc init channel
+     */
+    public static ExpressChannel init(ComponentConfig config) {
+        return JSON.parseObject(JSON.toJSONString(config.getConfig()), ExpressChannel.class);
+    }
 
     /**
      * start channel

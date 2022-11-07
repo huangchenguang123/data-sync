@@ -8,6 +8,7 @@ import com.chuxing.datasyncservice.model.dto.FlowDTO;
 import com.chuxing.datasyncservice.service.component.channel.BaseChannel;
 import com.chuxing.datasyncservice.service.component.source.BaseSource;
 import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
@@ -47,6 +48,7 @@ public class FlowManager {
     private void init() {
         initFlow();
         startFlow();
+        stopFlow();
     }
 
     /**
@@ -55,6 +57,10 @@ public class FlowManager {
      * @desc init source
      */
     private void initFlow() {
+        // init flow map
+        flowMap = Maps.newConcurrentMap();
+
+        // init component
         List<FlowDTO> flows = flowDAO.getAllFlow();
         for (FlowDTO flowDTO : flows) {
             FlowConfig flowConfig = JSON.parseObject(flowDTO.getConfig(), FlowConfig.class);
@@ -81,7 +87,18 @@ public class FlowManager {
      * @desc start flow
      */
     private void startFlow() {
+        // start flow
         flowMap.values().forEach(Flow::start);
+    }
+
+    /**
+     * @date 2022/11/7 15:36
+     * @author huangchenguang
+     * @desc stop flow
+     */
+    private void stopFlow() {
+        // add hook to jvm shutdown
+        Runtime.getRuntime().addShutdownHook(new Thread(() -> flowMap.values().forEach(Flow::stop)));
     }
 
 }

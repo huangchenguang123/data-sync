@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @date 2022/10/28 10:57
@@ -13,7 +14,6 @@ import java.util.List;
  * @desc Flow
  */
 @Getter
-@AllArgsConstructor
 public class Flow {
 
     /**
@@ -36,6 +36,16 @@ public class Flow {
      * @desc baseChannel
      */
     private List<BaseChannel> baseChannels;
+
+    public Flow(String flowName, List<BaseSource> baseSources, List<BaseChannel> baseChannels) {
+        this.flowName = flowName;
+        this.baseSources = baseSources;
+        this.baseChannels = baseChannels;
+
+        // find root channel
+        baseChannels.stream().filter(channel -> Objects.isNull(channel.getPreChannelId()));
+        baseSources.forEach(source -> source.setRootChannels(baseChannels));
+    }
 
     /**
      * @date 2022/10/28 11:03
