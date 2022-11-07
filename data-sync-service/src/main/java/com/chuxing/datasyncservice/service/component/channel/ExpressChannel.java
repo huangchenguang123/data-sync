@@ -25,7 +25,7 @@ public class ExpressChannel extends BaseChannel {
      * @author huangchenguang
      * @desc runner
      */
-    ExpressRunner runner;
+    private ExpressRunner runner;
 
     /**
      * @date 2022/10/28 10:18
@@ -43,7 +43,7 @@ public class ExpressChannel extends BaseChannel {
     @Override
     public void start() {
         isRunning.set(true);
-        ExpressRunner runner = new ExpressRunner();
+        runner = new ExpressRunner();
     }
 
     /**

@@ -12,6 +12,11 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum ChannelEnum {
 
+    /**
+     * @date 2022/11/7 15:00
+     * @author huangchenguang
+     * @desc ExpressChannel
+     */
     EXPRESS_CHANNEL("ExpressChannel"),
 
     ;

@@ -1,9 +1,15 @@
 package com.chuxing.datasyncservice.service.component.channel;
 
+import com.chuxing.datasyncservice.model.config.ComponentConfig;
 import com.chuxing.datasyncservice.model.config.FlowConfig;
 
 import java.util.Map;
 
+/**
+ * @date 2022/11/7 15:00
+ * @author huangchenguang
+ * @desc BaseChannel
+ */
 public abstract class BaseChannel {
 
     /**
@@ -11,8 +17,7 @@ public abstract class BaseChannel {
      * @author huangchenguang
      * @desc init source
      */
-    public static BaseChannel init(FlowConfig flowConfig) {
-
+    public static BaseChannel init(ComponentConfig config) {
         return null;
     }
 

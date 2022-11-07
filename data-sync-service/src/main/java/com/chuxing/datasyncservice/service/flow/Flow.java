@@ -17,6 +17,13 @@ import java.util.List;
 public class Flow {
 
     /**
+     * @date 2022/11/7 15:10
+     * @author huangchenguang
+     * @desc flowName
+     */
+    private String flowName;
+
+    /**
      * @date 2022/10/28 10:58
      * @author huangchenguang
      * @desc baseSource
