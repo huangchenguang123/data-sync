@@ -16,6 +16,7 @@
     <select id="getAllFlow" resultMap="BaseResultMap">
         select *
         from flow
+        where enable = 1
         ;
     </select>
 

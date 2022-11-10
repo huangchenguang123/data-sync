@@ -1,9 +1,6 @@
 package com.chuxing.datasyncservice.model.config;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import java.util.Map;
 
@@ -13,9 +10,6 @@ import java.util.Map;
  * @desc ComponentConfig
  */
 @Data
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor
 public class ComponentConfig {
 
     /**
@@ -24,6 +18,13 @@ public class ComponentConfig {
      * @desc type
      */
     private String type;
+
+    /**
+     * @date 2022/11/9 15:28
+     * @author huangchenguang
+     * @desc id
+     */
+    private Integer id;
 
     /**
      * @date 2022/10/28 14:15

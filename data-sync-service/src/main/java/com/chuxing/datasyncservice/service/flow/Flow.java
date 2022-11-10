@@ -2,11 +2,9 @@ package com.chuxing.datasyncservice.service.flow;
 
 import com.chuxing.datasyncservice.service.component.channel.BaseChannel;
 import com.chuxing.datasyncservice.service.component.source.BaseSource;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 
-import java.util.List;
-import java.util.Objects;
+import java.util.Map;
 
 /**
  * @date 2022/10/28 10:57
@@ -28,23 +26,21 @@ public class Flow {
      * @author huangchenguang
      * @desc baseSource
      */
-    private List<BaseSource> baseSources;
+    private Map<Integer, BaseSource> baseSources;
 
     /**
      * @date 2022/10/28 11:00
      * @author huangchenguang
      * @desc baseChannel
      */
-    private List<BaseChannel> baseChannels;
+    private Map<Integer, BaseChannel> baseChannels;
 
-    public Flow(String flowName, List<BaseSource> baseSources, List<BaseChannel> baseChannels) {
+    public Flow(String flowName, Map<Integer, BaseSource> baseSources, Map<Integer, BaseChannel> baseChannels) {
         this.flowName = flowName;
         this.baseSources = baseSources;
+        baseSources.values().forEach(baseSource -> baseSource.setFlow(this));
         this.baseChannels = baseChannels;
-
-        // find root channel
-        baseChannels.stream().filter(channel -> Objects.isNull(channel.getPreChannelId()));
-        baseSources.forEach(source -> source.setRootChannels(baseChannels));
+        baseChannels.values().forEach(baseChannel -> baseChannel.setFlow(this));
     }
 
     /**
@@ -53,8 +49,8 @@ public class Flow {
      * @desc start
      */
     public void start() {
-        baseChannels.forEach(BaseChannel::start);
-        baseSources.forEach(BaseSource::start);
+        baseChannels.values().forEach(BaseChannel::start);
+        baseSources.values().forEach(BaseSource::start);
     }
 
     /**
@@ -63,8 +59,8 @@ public class Flow {
      * @desc stop
      */
     public void stop() {
-        baseChannels.forEach(BaseChannel::stop);
-        baseSources.forEach(BaseSource::stop);
+        baseChannels.values().forEach(BaseChannel::stop);
+        baseSources.values().forEach(BaseSource::stop);
     }
 
 }

@@ -1,9 +1,11 @@
 package com.chuxing.datasyncservice.service.component.channel;
 
-import com.chuxing.datasyncservice.model.config.ComponentConfig;
+import com.chuxing.datasyncservice.model.config.ChannelConfig;
 import com.chuxing.datasyncservice.model.enums.ChannelEnum;
-import lombok.Getter;
+import com.chuxing.datasyncservice.service.flow.Flow;
+import lombok.Data;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -11,33 +13,59 @@ import java.util.Map;
  * @author huangchenguang
  * @desc BaseChannel
  */
-@Getter
+@Data
 public abstract class BaseChannel {
 
     /**
-     * @date 2022/11/7 15:32
+     * @date 2022/11/10 16:12
      * @author huangchenguang
-     * @desc channelId
+     * @desc
      */
-    protected Integer channelId;
+    private Flow flow;
+
+    /**
+     * @date 2022/10/28 14:14
+     * @author huangchenguang
+     * @desc type
+     */
+    private String type;
+
+    /**
+     * @date 2022/11/9 15:28
+     * @author huangchenguang
+     * @desc id
+     */
+    private Integer id;
 
     /**
      * @date 2022/11/7 15:32
-     * @author huangchenguang
      * @desc preChannelId
      */
-    protected Integer preChannelId;
+    protected List<Integer> preChannelIds;
+
+    /**
+     * @date 2022/11/7 15:32
+     * @desc nextChannelId
+     */
+    protected List<Integer> nextChannelIds;
 
     /**
      * @date 2022/10/20 17:27
      * @author huangchenguang
      * @desc init source
      */
-    public static BaseChannel init(ComponentConfig config) {
+    public static BaseChannel init(ChannelConfig config) {
+        BaseChannel baseChannel;
         if (config.getType().equals(ChannelEnum.EXPRESS_CHANNEL.getName())) {
-            return ExpressChannel.init(config);
+            baseChannel = ExpressChannel.init(config);
+        } else {
+            throw new RuntimeException("not support channel type");
         }
-        return null;
+        baseChannel.setId(config.getId());
+        baseChannel.setType(config.getType());
+        baseChannel.setPreChannelIds(config.getPreChannelIds());
+        baseChannel.setNextChannelIds(config.getNextChannelIds());
+        return baseChannel;
     }
 
     /**
@@ -61,6 +89,7 @@ public abstract class BaseChannel {
      *
      * @date 2022/10/27 17:19
      * @author huangchenguang
+     * @param data all data
      */
     public abstract void run(Map<String, Object> data);
 

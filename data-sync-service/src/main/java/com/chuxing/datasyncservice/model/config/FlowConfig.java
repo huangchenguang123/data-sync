@@ -1,7 +1,6 @@
 package com.chuxing.datasyncservice.model.config;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -13,7 +12,6 @@ import java.util.List;
  * @desc FlowConfigDTO
  */
 @Data
-@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class FlowConfig {
@@ -30,7 +28,7 @@ public class FlowConfig {
      * @author huangchenguang
      * @desc channel
      */
-    private List<ComponentConfig> channel;
+    private List<ChannelConfig> channel;
 
     /**
      * @date 2022/10/28 14:20

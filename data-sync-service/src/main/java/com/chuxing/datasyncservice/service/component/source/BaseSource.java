@@ -2,10 +2,10 @@ package com.chuxing.datasyncservice.service.component.source;
 
 import com.chuxing.datasyncservice.model.config.ComponentConfig;
 import com.chuxing.datasyncservice.model.enums.SourceEnum;
-import com.chuxing.datasyncservice.service.component.channel.BaseChannel;
-import lombok.Setter;
+import com.chuxing.datasyncservice.service.component.channel.run.ChannelRunCore;
+import com.chuxing.datasyncservice.service.flow.Flow;
+import lombok.Data;
 
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -13,15 +13,29 @@ import java.util.Map;
  * @author huangchenguang
  * @desc the source is the entry point to the data
  */
-@Setter
+@Data
 public abstract class BaseSource {
 
     /**
-     * @date 2022/11/7 15:30
+     * @date 2022/11/10 16:12
      * @author huangchenguang
-     * @desc rootChannels
+     * @desc
      */
-    private List<BaseChannel> rootChannels;
+    private Flow flow;
+
+    /**
+     * @date 2022/10/28 14:14
+     * @author huangchenguang
+     * @desc type
+     */
+    private String type;
+
+    /**
+     * @date 2022/11/9 15:28
+     * @author huangchenguang
+     * @desc id
+     */
+    private Integer id;
 
     /**
      * @date 2022/10/20 17:27
@@ -29,10 +43,15 @@ public abstract class BaseSource {
      * @desc init source
      */
     public static BaseSource init(ComponentConfig config) {
+        BaseSource baseSource;
         if (config.getType().equals(SourceEnum.NSQ_SOURCE.getName())) {
-            return NsqSource.init(config);
+            baseSource = NsqSource.init(config);
+        } else {
+            throw new RuntimeException("source type is not supported");
         }
-        return null;
+        baseSource.setId(config.getId());
+        baseSource.setType(config.getType());
+        return baseSource;
     }
 
     /**
@@ -57,7 +76,7 @@ public abstract class BaseSource {
      * @desc source run
      */
     public void run(Map<String, Object> data) {
-        rootChannels.forEach(rootChannel -> rootChannel.run(data));
+        ChannelRunCore.submit(flow, data);
     }
 
 }

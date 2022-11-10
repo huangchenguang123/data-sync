@@ -2,12 +2,12 @@ package com.chuxing.datasyncservice.service.flow;
 
 import com.alibaba.fastjson2.JSON;
 import com.chuxing.datasyncservice.dao.FlowDAO;
+import com.chuxing.datasyncservice.model.config.ChannelConfig;
 import com.chuxing.datasyncservice.model.config.ComponentConfig;
 import com.chuxing.datasyncservice.model.config.FlowConfig;
 import com.chuxing.datasyncservice.model.dto.FlowDTO;
 import com.chuxing.datasyncservice.service.component.channel.BaseChannel;
 import com.chuxing.datasyncservice.service.component.source.BaseSource;
-import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import org.springframework.stereotype.Component;
 
@@ -65,14 +65,16 @@ public class FlowManager {
         for (FlowDTO flowDTO : flows) {
             FlowConfig flowConfig = JSON.parseObject(flowDTO.getConfig(), FlowConfig.class);
             // init sources
-            List<BaseSource> sources = Lists.newArrayList();
+            Map<Integer, BaseSource> sources = Maps.newConcurrentMap();
             for (ComponentConfig config : flowConfig.getSource()) {
-                sources.add(BaseSource.init(config));
+                BaseSource baseSource = BaseSource.init(config);
+                sources.put(baseSource.getId(), baseSource);
             }
             // init channels
-            List<BaseChannel> channels = Lists.newArrayList();
-            for (ComponentConfig config : flowConfig.getChannel()) {
-                channels.add(BaseChannel.init(config));
+            Map<Integer, BaseChannel> channels = Maps.newConcurrentMap();
+            for (ChannelConfig config : flowConfig.getChannel()) {
+                BaseChannel baseChannel = BaseChannel.init(config);
+                channels.put(baseChannel.getId(), baseChannel);
             }
             // init sinks
             // init flow

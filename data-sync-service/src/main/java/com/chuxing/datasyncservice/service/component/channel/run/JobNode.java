@@ -1,0 +1,64 @@
+package com.chuxing.datasyncservice.service.component.channel.run;
+
+import com.chuxing.datasyncservice.service.component.channel.BaseChannel;
+import lombok.Data;
+
+import java.util.List;
+import java.util.Map;
+
+/**
+ * @date 2022/11/10 16:07
+ * @author huangchenguang
+ * @desc JobNode
+ */
+@Data
+public class JobNode implements Runnable {
+
+    /**
+     * @date 2022/11/7 15:32
+     * @desc preJobNodes
+     */
+    private List<JobNode> preJobNodes;
+
+    /**
+     * @date 2022/11/7 15:32
+     * @desc nextJobNodes
+     */
+    private List<JobNode> nextJobNodes;
+
+    /**
+     * @date 2022/11/10 16:09
+     * @author huangchenguang
+     * @desc baseChannel
+     */
+    private BaseChannel baseChannel;
+
+    /**
+     * @date 2022/11/10 16:06
+     * @author huangchenguang
+     * @desc data
+     */
+    private Map<String, Object> data;
+
+    /**
+     * @date 2022/11/10 16:32
+     * @author huangchenguang
+     * @desc run
+     */
+    @Override
+    public void run() {
+        if (preJobNodes.isEmpty()) {
+            baseChannel.run(data);
+            // remove myself from next job node and submit
+            nextJobNodes.forEach(nextJobNode -> {
+                synchronized (data) {
+                    nextJobNode.getPreJobNodes().remove(this);
+                    if (nextJobNode.getPreJobNodes().isEmpty()) {
+                        ChannelRunCore.submit(nextJobNode);
+                    }
+                }
+            });
+        }
+    }
+
+}

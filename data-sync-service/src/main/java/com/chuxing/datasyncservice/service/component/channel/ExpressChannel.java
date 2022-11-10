@@ -1,9 +1,10 @@
 package com.chuxing.datasyncservice.service.component.channel;
 
 import com.alibaba.fastjson2.JSON;
-import com.chuxing.datasyncservice.model.config.ComponentConfig;
+import com.chuxing.datasyncservice.model.config.ChannelConfig;
 import com.ql.util.express.DefaultContext;
 import com.ql.util.express.ExpressRunner;
+import lombok.Data;
 
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -13,6 +14,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
  * @author huangchenguang
  * @desc
  */
+@Data
 public class ExpressChannel extends BaseChannel {
 
     /**
@@ -27,21 +29,45 @@ public class ExpressChannel extends BaseChannel {
      * @author huangchenguang
      * @desc runner
      */
-    private ExpressRunner runner;
+    private ExpressRunner runner = new ExpressRunner();
 
     /**
-     * @date 2022/10/28 10:18
+     * @date 2022/11/9 14:54
      * @author huangchenguang
-     * @desc qle script
+     * @desc qle
      */
-    private String script;
+    private QlExpress qle;
+
+    /**
+     * @date 2022/11/9 14:53
+     * @author huangchenguang
+     * @desc QlExpress
+     */
+    @Data
+    private static class QlExpress {
+
+        /**
+         * @date 2022/10/28 10:18
+         * @author huangchenguang
+         * @desc qle script
+         */
+        private String script;
+
+        /**
+         * @date 2022/11/9 14:53
+         * @author huangchenguang
+         * @desc result
+         */
+        private String result;
+
+    }
 
     /**
      * @date 2022/11/7 15:18
      * @author huangchenguang
      * @desc init channel
      */
-    public static ExpressChannel init(ComponentConfig config) {
+    public static ExpressChannel init(ChannelConfig config) {
         return JSON.parseObject(JSON.toJSONString(config.getConfig()), ExpressChannel.class);
     }
 
@@ -54,7 +80,6 @@ public class ExpressChannel extends BaseChannel {
     @Override
     public void start() {
         isRunning.set(true);
-        runner = new ExpressRunner();
     }
 
     /**
@@ -79,9 +104,11 @@ public class ExpressChannel extends BaseChannel {
     public void run(Map<String, Object> data) {
         if (isRunning.get()) {
             DefaultContext<String, Object> context = new DefaultContext<>();
+            // init context
             context.putAll(data);
             try {
-                data = (Map<String, Object>) runner.execute(script, context, null, true, false);
+                data.put(qle.getResult(), runner.execute(qle.getScript(), context, null, false, false));
+                System.out.println(JSON.toJSONString(data));
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }

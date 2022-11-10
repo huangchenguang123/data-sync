@@ -3,8 +3,9 @@ package com.chuxing.datasyncservice.service.component.source;
 import com.alibaba.fastjson2.JSON;
 import com.alibaba.fastjson2.TypeReference;
 import com.chuxing.datasyncservice.model.config.ComponentConfig;
-import com.sproutsocial.nsq.Message;
+import com.sproutsocial.nsq.MessageDataHandler;
 import com.sproutsocial.nsq.Subscriber;
+import lombok.Data;
 
 import java.util.Map;
 import java.util.Objects;
@@ -14,6 +15,7 @@ import java.util.Objects;
  * @author huangchenguang
  * @desc nsq source
  */
+@Data
 public class NsqSource extends BaseSource {
 
     /**
@@ -61,7 +63,10 @@ public class NsqSource extends BaseSource {
     @Override
     public void start() {
         subscriber = new Subscriber(lookupAddress);
-        subscriber.subscribe(topic, channel, this::handleData);
+        subscriber.subscribe(topic, channel, (MessageDataHandler) bytes -> {
+            Map<String, Object> data = JSON.parseObject(new String(bytes), new TypeReference<Map<String, Object>>() {});
+            run(data);
+        });
     }
 
     /**
@@ -74,17 +79,6 @@ public class NsqSource extends BaseSource {
         if (Objects.nonNull(subscriber)) {
             subscriber.stop();
         }
-    }
-
-    /**
-     * @date 2022/10/20 17:28
-     * @author huangchenguang
-     * @desc handle Data
-     */
-    public void handleData(Message message) {
-        Map<String, Object> data = JSON.parseObject(new String(message.getData()), new TypeReference<Map<String, Object>>() {});
-        run(data);
-        message.finish();
     }
 
 }
