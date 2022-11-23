@@ -18,21 +18,18 @@ public abstract class BaseChannel {
 
     /**
      * @date 2022/11/10 16:12
-     * @author huangchenguang
      * @desc
      */
     private Flow flow;
 
     /**
      * @date 2022/10/28 14:14
-     * @author huangchenguang
      * @desc type
      */
     private String type;
 
     /**
      * @date 2022/11/9 15:28
-     * @author huangchenguang
      * @desc id
      */
     private Integer id;

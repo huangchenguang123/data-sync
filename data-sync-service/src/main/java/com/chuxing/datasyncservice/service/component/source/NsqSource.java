@@ -5,7 +5,8 @@ import com.alibaba.fastjson2.TypeReference;
 import com.chuxing.datasyncservice.model.config.ComponentConfig;
 import com.sproutsocial.nsq.MessageDataHandler;
 import com.sproutsocial.nsq.Subscriber;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.Map;
 import java.util.Objects;
@@ -15,33 +16,30 @@ import java.util.Objects;
  * @author huangchenguang
  * @desc nsq source
  */
-@Data
+@Getter
+@Setter
 public class NsqSource extends BaseSource {
 
     /**
      * @date 2022/10/20 17:29
-     * @author huangchenguang
      * @desc lookup address
      */
     private String[] lookupAddress;
 
     /**
      * @date 2022/10/20 17:29
-     * @author huangchenguang
      * @desc topic name
      */
     private String topic;
 
     /**
      * @date 2022/10/20 17:28
-     * @author huangchenguang
      * @desc channel name
      */
     private String channel;
 
     /**
      * @date 2022/10/24 19:50
-     * @author huangchenguang
      * @desc subscriber
      */
     private Subscriber subscriber;

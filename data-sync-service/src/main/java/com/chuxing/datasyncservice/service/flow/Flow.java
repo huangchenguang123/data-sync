@@ -17,31 +17,27 @@ public class Flow {
 
     /**
      * @date 2022/11/7 15:10
-     * @author huangchenguang
      * @desc flowName
      */
-    private String flowName;
+    private final String flowName;
 
     /**
      * @date 2022/10/28 10:58
-     * @author huangchenguang
      * @desc baseSources
      */
-    private Map<Integer, BaseSource> baseSources;
+    private final Map<Integer, BaseSource> baseSources;
 
     /**
      * @date 2022/10/28 11:00
-     * @author huangchenguang
      * @desc baseChannels
      */
-    private Map<Integer, BaseChannel> baseChannels;
+    private final Map<Integer, BaseChannel> baseChannels;
 
     /**
      * @date 2022/11/23 16:16
-     * @author huangchenguang
      * @desc baseSinks
      */
-    private Map<Integer, BaseSink> baseSinks;
+    private final Map<Integer, BaseSink> baseSinks;
 
     public Flow(String flowName, Map<Integer, BaseSource> baseSources, Map<Integer, BaseChannel> baseChannels, Map<Integer, BaseSink> baseSinks) {
         this.flowName = flowName;

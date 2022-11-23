@@ -4,7 +4,8 @@ import com.alibaba.fastjson2.JSON;
 import com.chuxing.datasyncservice.model.config.ChannelConfig;
 import com.ql.util.express.DefaultContext;
 import com.ql.util.express.ExpressRunner;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -14,26 +15,24 @@ import java.util.concurrent.atomic.AtomicBoolean;
  * @author huangchenguang
  * @desc
  */
-@Data
+@Getter
+@Setter
 public class ExpressChannel extends BaseChannel {
 
     /**
      * @date 2022/10/28 10:16
-     * @author huangchenguang
      * @desc channel run flag
      */
     private AtomicBoolean isRunning = new AtomicBoolean(false);
 
     /**
      * @date 2022/10/28 10:26
-     * @author huangchenguang
      * @desc runner
      */
     private ExpressRunner runner = new ExpressRunner();
 
     /**
      * @date 2022/11/9 14:54
-     * @author huangchenguang
      * @desc qle
      */
     private QlExpress qle;
@@ -43,19 +42,18 @@ public class ExpressChannel extends BaseChannel {
      * @author huangchenguang
      * @desc QlExpress
      */
-    @Data
+    @Getter
+    @Setter
     private static class QlExpress {
 
         /**
          * @date 2022/10/28 10:18
-         * @author huangchenguang
          * @desc qle script
          */
         private String script;
 
         /**
          * @date 2022/11/9 14:53
-         * @author huangchenguang
          * @desc result
          */
         private String result;
@@ -100,7 +98,6 @@ public class ExpressChannel extends BaseChannel {
      * @author huangchenguang
      */
     @Override
-    @SuppressWarnings("unchecked")
     public void run(Map<String, Object> data) {
         if (isRunning.get()) {
             DefaultContext<String, Object> context = new DefaultContext<>();

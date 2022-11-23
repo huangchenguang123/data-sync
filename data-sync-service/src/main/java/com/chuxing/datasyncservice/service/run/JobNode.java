@@ -1,4 +1,4 @@
-package com.chuxing.datasyncservice.service.component.channel.run;
+package com.chuxing.datasyncservice.service.run;
 
 import com.chuxing.datasyncservice.service.component.channel.BaseChannel;
 import lombok.Data;
@@ -28,21 +28,18 @@ public class JobNode implements Runnable {
 
     /**
      * @date 2022/11/10 16:09
-     * @author huangchenguang
      * @desc baseChannel
      */
     private BaseChannel baseChannel;
 
     /**
      * @date 2022/11/10 16:06
-     * @author huangchenguang
      * @desc data
      */
     private Map<String, Object> data;
 
     /**
      * @date 2022/11/23 16:24
-     * @author huangchenguang
      * @desc remainingJobNodes
      */
     private List<JobNode> remainingJobNodes;
@@ -53,6 +50,7 @@ public class JobNode implements Runnable {
      * @desc run
      */
     @Override
+    @SuppressWarnings("all")
     public void run() {
         if (preJobNodes.isEmpty()) {
             baseChannel.run(data);

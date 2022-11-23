@@ -2,7 +2,7 @@ package com.chuxing.datasyncservice.service.component.source;
 
 import com.chuxing.datasyncservice.model.config.ComponentConfig;
 import com.chuxing.datasyncservice.model.enums.SourceEnum;
-import com.chuxing.datasyncservice.service.component.channel.run.ChannelRunCore;
+import com.chuxing.datasyncservice.service.run.ChannelRunCore;
 import com.chuxing.datasyncservice.service.flow.Flow;
 import lombok.Data;
 
@@ -18,21 +18,18 @@ public abstract class BaseSource {
 
     /**
      * @date 2022/11/10 16:12
-     * @author huangchenguang
      * @desc
      */
     private Flow flow;
 
     /**
      * @date 2022/10/28 14:14
-     * @author huangchenguang
      * @desc type
      */
     private String type;
 
     /**
      * @date 2022/11/9 15:28
-     * @author huangchenguang
      * @desc id
      */
     private Integer id;

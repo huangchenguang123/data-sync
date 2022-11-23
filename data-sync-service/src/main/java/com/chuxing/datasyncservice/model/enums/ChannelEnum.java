@@ -14,7 +14,6 @@ public enum ChannelEnum {
 
     /**
      * @date 2022/11/7 15:00
-     * @author huangchenguang
      * @desc ExpressChannel
      */
     EXPRESS_CHANNEL("ExpressChannel"),
@@ -23,9 +22,8 @@ public enum ChannelEnum {
 
     /**
      * @date 2022/10/24 19:36
-     * @author huangchenguang
      * @desc name
      */
-    private String name;
+    private final String name;
 
 }

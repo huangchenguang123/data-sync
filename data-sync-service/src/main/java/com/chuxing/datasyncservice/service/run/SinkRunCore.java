@@ -1,4 +1,4 @@
-package com.chuxing.datasyncservice.service.component.channel.run;
+package com.chuxing.datasyncservice.service.run;
 
 import com.chuxing.datasyncservice.service.flow.Flow;
 
@@ -17,10 +17,9 @@ public class SinkRunCore {
 
     /**
      * @date 2022/11/9 15:03
-     * @author huangchenguang
      * @desc threadPoolExecutor
      */
-    private static ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(
+    private static final ThreadPoolExecutor THREAD_POOL_EXECUTOR = new ThreadPoolExecutor(
             8,
             8,
             0,
@@ -35,7 +34,7 @@ public class SinkRunCore {
      * @desc submit
      */
     public static void submit(Flow flow, Map<String, Object> data) {
-        flow.getBaseSinks().values().forEach(baseSink -> baseSink.run(data));
+        flow.getBaseSinks().values().forEach(baseSink -> THREAD_POOL_EXECUTOR.submit(() -> baseSink.run(data)));
     }
 
 }

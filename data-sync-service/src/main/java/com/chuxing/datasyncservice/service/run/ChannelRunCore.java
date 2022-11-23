@@ -1,4 +1,4 @@
-package com.chuxing.datasyncservice.service.component.channel.run;
+package com.chuxing.datasyncservice.service.run;
 
 import com.chuxing.datasyncservice.service.flow.Flow;
 import com.google.common.collect.Lists;
@@ -18,10 +18,9 @@ public class ChannelRunCore {
 
     /**
      * @date 2022/11/9 15:03
-     * @author huangchenguang
      * @desc threadPoolExecutor
      */
-    private static ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(
+    private static final ThreadPoolExecutor THREAD_POOL_EXECUTOR = new ThreadPoolExecutor(
             8,
             8,
             0,
@@ -37,7 +36,7 @@ public class ChannelRunCore {
      */
     public static void submit(Flow flow, Map<String, Object> data) {
         List<JobNode> job = initJob(flow, data);
-        job.forEach(threadPoolExecutor::submit);
+        job.forEach(THREAD_POOL_EXECUTOR::submit);
     }
 
     /**
@@ -46,7 +45,7 @@ public class ChannelRunCore {
      * @desc submit running task to thread pool
      */
     public static void submit(JobNode jobNode) {
-        threadPoolExecutor.submit(jobNode);
+        THREAD_POOL_EXECUTOR.submit(jobNode);
     }
 
     /**

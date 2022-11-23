@@ -27,7 +27,6 @@ public class FlowManager {
 
     /**
      * @date 2022/10/24 16:47
-     * @author huangchenguang
      * @desc flowDAO
      */
     @Resource
@@ -35,7 +34,6 @@ public class FlowManager {
 
     /**
      * @date 2022/10/28 10:56
-     * @author huangchenguang
      * @desc flow map
      */
     private Map<String, Flow> flowMap;

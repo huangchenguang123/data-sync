@@ -1,6 +1,7 @@
 package com.chuxing.datasyncservice.model.config;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.List;
 
@@ -9,7 +10,8 @@ import java.util.List;
  * @author huangchenguang
  * @desc ChannelConfig
  */
-@Data
+@Getter
+@Setter
 public class ChannelConfig extends ComponentConfig {
 
     /**

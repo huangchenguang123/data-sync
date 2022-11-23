@@ -15,10 +15,9 @@ public class ConsoleSink extends BaseSink {
 
     /**
      * @date 2022/10/28 10:16
-     * @author huangchenguang
      * @desc channel run flag
      */
-    private AtomicBoolean isRunning = new AtomicBoolean(false);
+    private final AtomicBoolean isRunning = new AtomicBoolean(false);
 
     /**
      * @date 2022/11/23 16:09
