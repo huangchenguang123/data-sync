@@ -52,7 +52,7 @@ public abstract class BaseChannel {
     /**
      * @date 2022/10/20 17:27
      * @author huangchenguang
-     * @desc init source
+     * @desc init channel
      */
     public static BaseChannel init(ChannelConfig config) {
         BaseChannel baseChannel;

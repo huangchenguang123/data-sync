@@ -19,22 +19,22 @@ public class FlowConfig {
     /**
      * @date 2022/10/28 14:20
      * @author huangchenguang
-     * @desc source
+     * @desc sources
      */
-    private List<ComponentConfig> source;
+    private List<ComponentConfig> sources;
 
     /**
      * @date 2022/10/28 14:20
      * @author huangchenguang
-     * @desc channel
+     * @desc channels
      */
-    private List<ChannelConfig> channel;
+    private List<ChannelConfig> channels;
 
     /**
      * @date 2022/10/28 14:20
      * @author huangchenguang
-     * @desc sink
+     * @desc sinks
      */
-    private List<ComponentConfig> sink;
+    private List<ComponentConfig> sinks;
 
 }

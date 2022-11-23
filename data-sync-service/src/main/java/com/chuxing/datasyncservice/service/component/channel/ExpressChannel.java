@@ -65,7 +65,7 @@ public class ExpressChannel extends BaseChannel {
     /**
      * @date 2022/11/7 15:18
      * @author huangchenguang
-     * @desc init channel
+     * @desc init express channel
      */
     public static ExpressChannel init(ChannelConfig config) {
         return JSON.parseObject(JSON.toJSONString(config.getConfig()), ExpressChannel.class);
@@ -108,7 +108,6 @@ public class ExpressChannel extends BaseChannel {
             context.putAll(data);
             try {
                 data.put(qle.getResult(), runner.execute(qle.getScript(), context, null, false, false));
-                System.out.println(JSON.toJSONString(data));
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }

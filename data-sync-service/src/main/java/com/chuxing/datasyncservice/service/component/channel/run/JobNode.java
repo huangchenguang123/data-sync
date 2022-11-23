@@ -41,6 +41,13 @@ public class JobNode implements Runnable {
     private Map<String, Object> data;
 
     /**
+     * @date 2022/11/23 16:24
+     * @author huangchenguang
+     * @desc remainingJobNodes
+     */
+    private List<JobNode> remainingJobNodes;
+
+    /**
      * @date 2022/11/10 16:32
      * @author huangchenguang
      * @desc run
@@ -49,8 +56,16 @@ public class JobNode implements Runnable {
     public void run() {
         if (preJobNodes.isEmpty()) {
             baseChannel.run(data);
+            // remove myself from remainingJobNodes
+            synchronized(remainingJobNodes) {
+                remainingJobNodes.remove(this);
+                if (remainingJobNodes.isEmpty()) {
+                    SinkRunCore.submit(baseChannel.getFlow(), data);
+                }
+            }
             // remove myself from next job node and submit
             nextJobNodes.forEach(nextJobNode -> {
+                // prevent duplicate submissions
                 synchronized (data) {
                     nextJobNode.getPreJobNodes().remove(this);
                     if (nextJobNode.getPreJobNodes().isEmpty()) {
@@ -58,6 +73,7 @@ public class JobNode implements Runnable {
                     }
                 }
             });
+
         }
     }
 

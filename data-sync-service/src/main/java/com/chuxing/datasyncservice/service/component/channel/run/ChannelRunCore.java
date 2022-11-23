@@ -33,7 +33,7 @@ public class ChannelRunCore {
     /**
      * @date 2022/11/9 15:12
      * @author huangchenguang
-     * @desc submit task to thread pool
+     * @desc submit first job to thread pool
      */
     public static void submit(Flow flow, Map<String, Object> data) {
         List<JobNode> job = initJob(flow, data);
@@ -43,7 +43,7 @@ public class ChannelRunCore {
     /**
      * @date 2022/11/10 16:39
      * @author huangchenguang
-     * @desc submit task to thread pool
+     * @desc submit running task to thread pool
      */
     public static void submit(JobNode jobNode) {
         threadPoolExecutor.submit(jobNode);
@@ -74,6 +74,10 @@ public class ChannelRunCore {
             jobNodeMap.get(baseChannel.getId()).setPreJobNodes(preJobNodes);
             jobNodeMap.get(baseChannel.getId()).setNextJobNodes(nextJobNodes);
         });
+        // int remainingJobNodes
+        List<JobNode> remainingJobNodes = Lists.newArrayList(jobNodeMap.values());
+        jobNodeMap.values().forEach(jobNode -> jobNode.setRemainingJobNodes(remainingJobNodes));
+
         // find root job node
         return jobNodeMap.values().stream().filter(jobNode -> jobNode.getPreJobNodes().isEmpty()).collect(Collectors.toList());
     }

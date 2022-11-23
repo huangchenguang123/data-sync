@@ -7,6 +7,7 @@ import com.chuxing.datasyncservice.model.config.ComponentConfig;
 import com.chuxing.datasyncservice.model.config.FlowConfig;
 import com.chuxing.datasyncservice.model.dto.FlowDTO;
 import com.chuxing.datasyncservice.service.component.channel.BaseChannel;
+import com.chuxing.datasyncservice.service.component.sink.BaseSink;
 import com.chuxing.datasyncservice.service.component.source.BaseSource;
 import com.google.common.collect.Maps;
 import org.springframework.stereotype.Component;
@@ -66,19 +67,24 @@ public class FlowManager {
             FlowConfig flowConfig = JSON.parseObject(flowDTO.getConfig(), FlowConfig.class);
             // init sources
             Map<Integer, BaseSource> sources = Maps.newConcurrentMap();
-            for (ComponentConfig config : flowConfig.getSource()) {
+            for (ComponentConfig config : flowConfig.getSources()) {
                 BaseSource baseSource = BaseSource.init(config);
                 sources.put(baseSource.getId(), baseSource);
             }
             // init channels
             Map<Integer, BaseChannel> channels = Maps.newConcurrentMap();
-            for (ChannelConfig config : flowConfig.getChannel()) {
+            for (ChannelConfig config : flowConfig.getChannels()) {
                 BaseChannel baseChannel = BaseChannel.init(config);
                 channels.put(baseChannel.getId(), baseChannel);
             }
             // init sinks
+            Map<Integer, BaseSink> sinks = Maps.newConcurrentMap();
+            for (ComponentConfig config : flowConfig.getSinks()) {
+                BaseSink baseSink = BaseSink.init(config);
+                sinks.put(baseSink.getId(), baseSink);
+            }
             // init flow
-            Flow flow = new Flow(flowDTO.getFlowName(), sources, channels);
+            Flow flow = new Flow(flowDTO.getFlowName(), sources, channels, sinks);
             flowMap.put(flow.getFlowName(), flow);
         }
     }
