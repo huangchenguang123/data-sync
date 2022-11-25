@@ -3,6 +3,7 @@ package com.chuxing.datasyncservice.model.config;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -12,7 +13,14 @@ import java.util.List;
  */
 @Getter
 @Setter
-public class ChannelConfig extends ComponentConfig {
+public class ChannelConfig extends ComponentConfig implements Serializable {
+
+    /**
+     * @date 2022/11/25 15:43
+     * @author huangchenguang
+     * @desc serialVersionUID
+     */
+    private static final long serialVersionUID = 3079696928460138687L;
 
     /**
      * @date 2022/11/7 15:32

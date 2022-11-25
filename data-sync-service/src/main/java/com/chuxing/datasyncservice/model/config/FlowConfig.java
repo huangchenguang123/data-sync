@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -14,7 +15,14 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class FlowConfig {
+public class FlowConfig implements Serializable {
+
+    /**
+     * @date 2022/11/25 15:44
+     * @author huangchenguang
+     * @desc serialVersionUID
+     */
+    private static final long serialVersionUID = -3134899860609430451L;
 
     /**
      * @date 2022/10/28 14:20

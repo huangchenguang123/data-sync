@@ -1,4 +1,4 @@
-package com.chuxing.datasyncservice.model.dto;
+package com.chuxing.datasyncservice.model.rpc.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -8,21 +8,22 @@ import lombok.NoArgsConstructor;
 import java.io.Serializable;
 
 /**
- * @date 2022/10/24 15:29
+ * @date 2022/11/25 10:09
  * @author huangchenguang
- * @desc FlowDTO
+ * @desc FlowResponse
  */
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class FlowDTO implements Serializable {
+public class FlowResponse implements Serializable {
 
     /**
-     * @date 2022/10/24 15:30
-     * @desc Serializable
+     * @date 2022/11/25 10:09
+     * @author huangchenguang
+     * @desc serialVersionUID
      */
-    private static final long serialVersionUID = 6736105630640446239L;
+    private static final long serialVersionUID = 3837466755057578200L;
 
     /**
      * @date 2022/10/24 15:34
@@ -46,7 +47,7 @@ public class FlowDTO implements Serializable {
      * @date 2022/10/24 15:34
      * @desc enable
      */
-    private Integer enable;
+    private Boolean enable;
 
     /**
      * @date 2022/10/24 15:34

@@ -14,10 +14,53 @@
     </resultMap>
 
     <select id="getAllFlow" resultMap="BaseResultMap">
-        select *
+        select id, flow_name, config, enable, create_at, update_at
         from flow
         where enable = 1
         ;
     </select>
+
+    <insert id="createFlow">
+        insert into flow
+        (flow_name, config, enable, create_at, update_at)
+        values
+        (#{flow.flowName}, #{flow.config}, #{flow.enable}, #{flow.createAt}, #{flow.updateAt})
+        ;
+    </insert>
+    
+    <select id="getFlow" resultMap="BaseResultMap">
+        select id, flow_name, config, enable, create_at, update_at
+        from flow
+        where id = #{flowId}
+        ;
+    </select>
+
+    <select id="searchFlow" resultMap="BaseResultMap">
+        select id, flow_name, config, enable, create_at, update_at
+        from flow
+        where flow_name like concat('%', #{flowName}, '%')
+        limit #{offset}, #{limit}
+        ;
+    </select>
+
+    <select id="count">
+        select count(1)
+        from flow
+        where flow_name like concat('%', #{flowName}, '%')
+        ;
+    </select>
+
+    <delete id="deleteFlow">
+        delete from flow
+        where id = #{flowId}
+        ;
+    </delete>
+
+    <update id="enableFlow">
+        update flow
+        set enable = #{enable}
+        where id = #{flowId}
+        ;
+    </update>
 
 </mapper>
