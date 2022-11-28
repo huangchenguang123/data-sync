@@ -38,15 +38,19 @@
     <select id="searchFlow" resultMap="BaseResultMap">
         select id, flow_name, config, enable, create_at, update_at
         from flow
-        where flow_name like concat('%', #{flowName}, '%')
+        <if test="flowName != null and flowName != ''">
+            where flow_name like concat('%', #{flowName}, '%')
+        </if>
         limit #{offset}, #{limit}
         ;
     </select>
 
-    <select id="count">
+    <select id="countFlow" resultType="java.lang.Integer">
         select count(1)
         from flow
-        where flow_name like concat('%', #{flowName}, '%')
+        <if test="flowName != null and flowName != ''">
+            where flow_name like concat('%', #{flowName}, '%')
+        </if>
         ;
     </select>
 

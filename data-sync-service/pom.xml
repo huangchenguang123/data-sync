@@ -27,6 +27,7 @@
         <lang3.version>3.12.0</lang3.version>
         <rule.version>3.3.0</rule.version>
         <gson.version>2.10</gson.version>
+        <validation.version>2.0.1.Final</validation.version>
     </properties>
 
     <dependencies>
@@ -89,6 +90,17 @@
             <artifactId>gson</artifactId>
             <version>${gson.version}</version>
         </dependency>
+        <!-- validation start -->
+        <dependency>
+            <groupId>javax.validation</groupId>
+            <artifactId>validation-api</artifactId>
+            <version>${validation.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-validation</artifactId>
+        </dependency>
+        <!-- validation stop -->
     </dependencies>
 
     <build>

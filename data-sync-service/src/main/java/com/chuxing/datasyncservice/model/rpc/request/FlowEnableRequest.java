@@ -2,6 +2,7 @@ package com.chuxing.datasyncservice.model.rpc.request;
 
 import lombok.Data;
 
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 /**
@@ -24,6 +25,7 @@ public class FlowEnableRequest implements Serializable {
      * @author huangchenguang
      * @desc flowId
      */
+    @NotNull
     private Long flowId;
 
     /**
@@ -31,6 +33,7 @@ public class FlowEnableRequest implements Serializable {
      * @author huangchenguang
      * @desc enable
      */
+    @NotNull
     private Boolean enable;
 
 }

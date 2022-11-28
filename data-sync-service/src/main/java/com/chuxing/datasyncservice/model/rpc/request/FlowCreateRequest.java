@@ -2,6 +2,7 @@ package com.chuxing.datasyncservice.model.rpc.request;
 
 import lombok.Data;
 
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 /**
@@ -23,12 +24,14 @@ public class FlowCreateRequest implements Serializable {
      * @date 2022/10/24 15:34
      * @desc flow name
      */
+    @NotNull
     private String flowName;
 
     /**
      * @date 2022/10/24 15:34
      * @desc config
      */
+    @NotNull
     private String config;
 
 }

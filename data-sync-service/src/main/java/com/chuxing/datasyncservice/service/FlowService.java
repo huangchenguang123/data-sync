@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 /**
@@ -30,6 +31,9 @@ public class FlowService {
      */
     public FlowResponse get(FlowGetRequest flowGetRequest) {
         FlowDTO flowDTO = flowDAO.getFlow(flowGetRequest.getFlowId());
+        if (Objects.isNull(flowDTO)) {
+            return null;
+        }
         return FlowResponse.builder()
                 .id(flowDTO.getId())
                 .flowName(flowDTO.getFlowName())

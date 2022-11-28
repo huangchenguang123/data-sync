@@ -2,6 +2,9 @@ package com.chuxing.datasyncservice.model.rpc.request;
 
 import lombok.Data;
 
+import javax.validation.Valid;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 /**
@@ -32,6 +35,8 @@ public class FlowSearchRequest implements Serializable {
      * @author huangchenguang
      * @desc page
      */
+    @Valid
+    @Min(value = 1)
     private Integer page;
 
     /**
@@ -39,6 +44,8 @@ public class FlowSearchRequest implements Serializable {
      * @author huangchenguang
      * @desc pageSize
      */
+    @Valid
+    @Min(value = 1)
     private Integer pageSize;
 
 }

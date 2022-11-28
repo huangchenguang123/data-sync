@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import javax.validation.Valid;
 
 /**
  * @date 2022/11/24 17:07
@@ -29,7 +30,7 @@ public class FlowController {
      * @desc create flow
      */
     @RequestMapping("/get")
-    public Result<FlowResponse>get(@RequestBody FlowGetRequest flowRequest) {
+    public Result<FlowResponse> get(@RequestBody @Valid FlowGetRequest flowRequest) {
         return Result.success(flowService.get(flowRequest));
     }
 
@@ -39,7 +40,7 @@ public class FlowController {
      * @desc create flow
      */
     @RequestMapping("/search")
-    public Result<Page<FlowResponse>>search(@RequestBody FlowSearchRequest flowSearchRequest) {
+    public Result<Page<FlowResponse>> search(@RequestBody @Valid FlowSearchRequest flowSearchRequest) {
         return Result.success(flowService.search(flowSearchRequest));
     }
 
@@ -49,7 +50,7 @@ public class FlowController {
      * @desc create flow
      */
     @RequestMapping("/create")
-    public Result<Boolean> create(@RequestBody FlowCreateRequest flowRequest) {
+    public Result<Boolean> create(@RequestBody @Valid FlowCreateRequest flowRequest) {
         return Result.success(flowService.create(flowRequest));
     }
 
@@ -59,7 +60,7 @@ public class FlowController {
      * @desc delete flow
      */
     @RequestMapping("/delete")
-    public Result<Boolean> delete(@RequestBody FlowDeleteRequest flowRequest) {
+    public Result<Boolean> delete(@RequestBody @Valid FlowDeleteRequest flowRequest) {
         return Result.success(flowService.delete(flowRequest));
     }
 
@@ -69,7 +70,7 @@ public class FlowController {
      * @desc enable flow
      */
     @RequestMapping("/enable")
-    public Result<Boolean> enable(@RequestBody FlowEnableRequest flowRequest) {
+    public Result<Boolean> enable(@RequestBody @Valid FlowEnableRequest flowRequest) {
         return Result.success(flowService.enable(flowRequest));
     }
 
