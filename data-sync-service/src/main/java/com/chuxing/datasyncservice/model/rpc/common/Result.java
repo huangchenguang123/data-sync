@@ -56,4 +56,17 @@ public class Result<T> implements Serializable {
                 .build();
     }
 
+    /**
+     * @date 2022/11/24 17:32
+     * @author huangchenguang
+     * @desc success
+     */
+    public static <T> Result<T> fail(String msg) {
+        return Result.<T>builder()
+                .data(null)
+                .code(500)
+                .msg(msg)
+                .build();
+    }
+
 }
