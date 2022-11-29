@@ -17,7 +17,6 @@ public class ChannelConfig extends ComponentConfig implements Serializable {
 
     /**
      * @date 2022/11/25 15:43
-     * @author huangchenguang
      * @desc serialVersionUID
      */
     private static final long serialVersionUID = 3079696928460138687L;

@@ -20,7 +20,6 @@ public class Result<T> implements Serializable {
 
     /**
      * @date 2022/11/25 15:43
-     * @author huangchenguang
      * @desc serialVersionUID
      */
     private static final long serialVersionUID = 3858997476649437710L;

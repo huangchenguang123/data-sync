@@ -15,7 +15,6 @@ public class FlowCreateRequest implements Serializable {
 
     /**
      * @date 2022/11/24 17:17
-     * @author huangchenguang
      * @desc serialVersionUID
      */
     private static final long serialVersionUID = 1627950836066992314L;

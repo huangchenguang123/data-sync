@@ -22,44 +22,65 @@ public interface FlowDAO {
     List<FlowDTO> getAllFlow();
 
     /**
+     * create flow
+     *
      * @date 2022/11/24 17:34
      * @author huangchenguang
-     * @desc create flow
+     * @param flowDTO flowDTO
+     * @return create count number
      */
     Integer createFlow(@Param("flow") FlowDTO flowDTO);
 
     /**
+     * get flow
+     *
      * @date 2022/11/25 10:10
      * @author huangchenguang
-     * @desc get flow
+     * @param flowId flowId
+     * @return  flowDTO
      */
     FlowDTO getFlow(@Param("flowId") Long flowId);
 
     /**
+     * search flow
+     *
      * @date 2022/11/25 16:07
      * @author huangchenguang
-     * @desc search
+     * @param flowName flowName
+     * @param offset page from
+     * @param limit page size
+     * @return search flow list
      */
     List<FlowDTO> searchFlow(@Param("flowName") String flowName, @Param("offset") Integer offset, @Param("limit") Integer limit);
 
     /**
+     * count
+     *
      * @date 2022/11/25 16:07
      * @author huangchenguang
-     * @desc count
+     * @param flowName flowName
+     * @return  count number
      */
     Integer countFlow(@Param("flowName") String flowName);
 
     /**
+     * delete flow
+     *
      * @date 2022/11/25 17:34
      * @author huangchenguang
-     * @desc delete flow
+     * @param flowId flowId
+     * @return delete count number
      */
     Integer deleteFlow(@Param("flowId") Long flowId);
 
     /**
+     * enable flow
+     *
      * @date 2022/11/25 17:38
      * @author huangchenguang
-     * @desc enable
+     * @param flowId flowId
+     * @param enable enable
+     * @return enable count number
      */
     Integer enableFlow(@Param("flowId") Long flowId, @Param("enable") Integer enable);
 

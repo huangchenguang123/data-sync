@@ -20,7 +20,6 @@ public class FlowResponse implements Serializable {
 
     /**
      * @date 2022/11/25 10:09
-     * @author huangchenguang
      * @desc serialVersionUID
      */
     private static final long serialVersionUID = 3837466755057578200L;

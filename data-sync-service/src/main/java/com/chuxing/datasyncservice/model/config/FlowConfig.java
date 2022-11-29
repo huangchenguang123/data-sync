@@ -19,7 +19,6 @@ public class FlowConfig implements Serializable {
 
     /**
      * @date 2022/11/25 15:44
-     * @author huangchenguang
      * @desc serialVersionUID
      */
     private static final long serialVersionUID = -3134899860609430451L;

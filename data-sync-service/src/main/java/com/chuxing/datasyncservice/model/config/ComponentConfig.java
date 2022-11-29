@@ -15,7 +15,6 @@ public class ComponentConfig implements Serializable {
 
     /**
      * @date 2022/11/25 15:44
-     * @author huangchenguang
      * @desc serialVersionUID
      */
     private static final long serialVersionUID = -6435238767671225967L;
