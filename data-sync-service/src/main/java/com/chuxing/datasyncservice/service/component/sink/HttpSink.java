@@ -76,19 +76,21 @@ public class HttpSink extends BaseSink {
      */
     @Override
     public void run(Map<String, Object> data) {
-        RequestBody body = RequestBody.create(JSON.toJSONString(data), MediaType.parse("application/json; charset=utf-8"));
-        Request request = new Request.Builder()
-                .url(url)
-                .post(body)
-                .build();
+        if (isRunning.get()) {
+            RequestBody body = RequestBody.create(JSON.toJSONString(data), MediaType.parse("application/json; charset=utf-8"));
+            Request request = new Request.Builder()
+                    .url(url)
+                    .post(body)
+                    .build();
 
-        try (Response response = okHttpClient.newCall(request).execute()) {
-            ResponseBody responseBody = response.body();
-            if (Objects.nonNull(responseBody)) {
-                System.out.println(responseBody.string());
+            try (Response response = okHttpClient.newCall(request).execute()) {
+                ResponseBody responseBody = response.body();
+                if (Objects.nonNull(responseBody)) {
+                    System.out.println(responseBody.string());
+                }
+            } catch (Exception e) {
+                log.error("[HttpSink.run] post error, params={}", JSON.toJSONString(data), e);
             }
-        } catch (Exception e) {
-            log.error("[HttpSink.run] post error, params={}", JSON.toJSONString(data), e);
         }
     }
 
