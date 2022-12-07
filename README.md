@@ -9,3 +9,7 @@ a tool for data receiving transformation and output
 npm install --legacy-peer-deps
 npm run dev
 ```
+
+## todo
+1. dynamic shunt and shadow mode
+2. add more component
