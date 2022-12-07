@@ -16,6 +16,7 @@ import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * @date 2022/10/24 16:07
@@ -112,7 +113,10 @@ public class FlowManager {
      * @desc start flow
      */
     public void startFlow(FlowDTO flowDTO) {
-        flowMap.get(flowDTO.getFlowName()).start();
+        Flow flow = flowMap.get(flowDTO.getFlowName());
+        if (Objects.nonNull(flow)) {
+            flow.start();
+        }
     }
 
     /**
@@ -122,7 +126,7 @@ public class FlowManager {
      */
     private void addFlowStopHook() {
         // add hook to jvm shutdown
-        Runtime.getRuntime().addShutdownHook(new Thread(() -> stopAllFlow()));
+        Runtime.getRuntime().addShutdownHook(new Thread(this::stopAllFlow));
     }
 
     /**
@@ -140,7 +144,10 @@ public class FlowManager {
      * @desc stop flow
      */
     public void stopFlow(FlowDTO flowDTO) {
-        flowMap.get(flowDTO.getFlowName()).stop();
+        Flow flow = flowMap.get(flowDTO.getFlowName());
+        if (Objects.nonNull(flow)) {
+            flow.stop();
+        }
     }
 
 }

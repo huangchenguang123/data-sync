@@ -115,6 +115,7 @@ public class FlowService {
         boolean result = flowDAO.enableFlow(flowRequest.getFlowId(), flowRequest.getEnable() ? 1 : 0) > 0;
         FlowDTO flowDTO = flowDAO.getFlow(flowRequest.getFlowId());
         if (flowRequest.getEnable()) {
+            flowManager.stopFlow(flowDTO);
             flowManager.initFlow(flowDTO);
             flowManager.startFlow(flowDTO);
         } else {
