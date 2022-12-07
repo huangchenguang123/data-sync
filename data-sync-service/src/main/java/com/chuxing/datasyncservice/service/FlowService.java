@@ -5,6 +5,7 @@ import com.chuxing.datasyncservice.model.dto.FlowDTO;
 import com.chuxing.datasyncservice.model.rpc.common.Page;
 import com.chuxing.datasyncservice.model.rpc.request.*;
 import com.chuxing.datasyncservice.model.rpc.response.FlowResponse;
+import com.chuxing.datasyncservice.service.flow.FlowManager;
 import com.chuxing.datasyncservice.utils.DateTimeUtils;
 import org.springframework.stereotype.Service;
 
@@ -23,6 +24,9 @@ public class FlowService {
 
     @Resource
     private FlowDAO flowDAO;
+
+    @Resource
+    private FlowManager flowManager;
 
     /**
      * @date 2022/11/25 10:09
@@ -108,7 +112,15 @@ public class FlowService {
      * @desc enable
      */
     public Boolean enable(FlowEnableRequest flowRequest) {
-        return flowDAO.enableFlow(flowRequest.getFlowId(), flowRequest.getEnable() ? 1 : 0) > 0;
+        boolean result = flowDAO.enableFlow(flowRequest.getFlowId(), flowRequest.getEnable() ? 1 : 0) > 0;
+        FlowDTO flowDTO = flowDAO.getFlow(flowRequest.getFlowId());
+        if (flowRequest.getEnable()) {
+            flowManager.initFlow(flowDTO);
+            flowManager.startFlow(flowDTO);
+        } else {
+            flowManager.stopFlow(flowDTO);
+        }
+        return result;
     }
 
 }

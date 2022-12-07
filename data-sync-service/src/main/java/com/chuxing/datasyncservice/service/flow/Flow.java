@@ -66,9 +66,9 @@ public class Flow {
      * @desc stop
      */
     public void stop() {
-        baseSinks.values().forEach(BaseSink::stop);
-        baseChannels.values().forEach(BaseChannel::stop);
         baseSources.values().forEach(BaseSource::stop);
+        baseChannels.values().forEach(BaseChannel::stop);
+        baseSinks.values().forEach(BaseSink::stop);
     }
 
 }

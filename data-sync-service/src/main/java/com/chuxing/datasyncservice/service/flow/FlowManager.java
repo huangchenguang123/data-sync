@@ -45,66 +45,102 @@ public class FlowManager {
      */
     @PostConstruct
     private void init() {
-        initFlow();
-        startFlow();
-        stopFlow();
+        initAllFlow();
+        startAllFlow();
+        addFlowStopHook();
     }
 
     /**
      * @date 2022/10/24 19:46
      * @author huangchenguang
-     * @desc init source
+     * @desc init all flow
      */
-    private void initFlow() {
+    private void initAllFlow() {
         // init flow map
         flowMap = Maps.newConcurrentMap();
 
         // init component
         List<FlowDTO> flows = flowDAO.getAllFlow();
         for (FlowDTO flowDTO : flows) {
-            FlowConfig flowConfig = JSON.parseObject(flowDTO.getConfig(), FlowConfig.class);
-            // init sources
-            Map<Integer, BaseSource> sources = Maps.newConcurrentMap();
-            for (ComponentConfig config : flowConfig.getSources()) {
-                BaseSource baseSource = BaseSource.init(config);
-                sources.put(baseSource.getId(), baseSource);
-            }
-            // init channels
-            Map<Integer, BaseChannel> channels = Maps.newConcurrentMap();
-            for (ChannelConfig config : flowConfig.getChannels()) {
-                BaseChannel baseChannel = BaseChannel.init(config);
-                channels.put(baseChannel.getId(), baseChannel);
-            }
-            // init sinks
-            Map<Integer, BaseSink> sinks = Maps.newConcurrentMap();
-            for (ComponentConfig config : flowConfig.getSinks()) {
-                BaseSink baseSink = BaseSink.init(config);
-                sinks.put(baseSink.getId(), baseSink);
-            }
-            // init flow
-            Flow flow = new Flow(flowDTO.getFlowName(), sources, channels, sinks);
-            flowMap.put(flow.getFlowName(), flow);
+            initFlow(flowDTO);
         }
+    }
+
+    /**
+     * @date 2022/12/7 10:42
+     * @author huangchenguang
+     * @desc init flow
+     */
+    public void initFlow(FlowDTO flowDTO) {
+        FlowConfig flowConfig = JSON.parseObject(flowDTO.getConfig(), FlowConfig.class);
+        // init sources
+        Map<Integer, BaseSource> sources = Maps.newConcurrentMap();
+        for (ComponentConfig config : flowConfig.getSources()) {
+            BaseSource baseSource = BaseSource.init(config);
+            sources.put(baseSource.getId(), baseSource);
+        }
+        // init channels
+        Map<Integer, BaseChannel> channels = Maps.newConcurrentMap();
+        for (ChannelConfig config : flowConfig.getChannels()) {
+            BaseChannel baseChannel = BaseChannel.init(config);
+            channels.put(baseChannel.getId(), baseChannel);
+        }
+        // init sinks
+        Map<Integer, BaseSink> sinks = Maps.newConcurrentMap();
+        for (ComponentConfig config : flowConfig.getSinks()) {
+            BaseSink baseSink = BaseSink.init(config);
+            sinks.put(baseSink.getId(), baseSink);
+        }
+        // init flow
+        Flow flow = new Flow(flowDTO.getFlowName(), sources, channels, sinks);
+        flowMap.put(flow.getFlowName(), flow);
     }
 
     /**
      * @date 2022/10/28 14:06
      * @author huangchenguang
-     * @desc start flow
+     * @desc start all flow
      */
-    private void startFlow() {
+    private void startAllFlow() {
         // start flow
         flowMap.values().forEach(Flow::start);
     }
 
     /**
+     * @date 2022/12/7 10:42
+     * @author huangchenguang
+     * @desc start flow
+     */
+    public void startFlow(FlowDTO flowDTO) {
+        flowMap.get(flowDTO.getFlowName()).start();
+    }
+
+    /**
      * @date 2022/11/7 15:36
+     * @author huangchenguang
+     * @desc add flow stop hook
+     */
+    private void addFlowStopHook() {
+        // add hook to jvm shutdown
+        Runtime.getRuntime().addShutdownHook(new Thread(() -> stopAllFlow()));
+    }
+
+    /**
+     * @date 2022/12/7 10:45
+     * @author huangchenguang
+     * @desc stop all flow
+     */
+    private void stopAllFlow() {
+        flowMap.values().forEach(Flow::stop);
+    }
+
+    /**
+     * @date 2022/12/7 10:45
      * @author huangchenguang
      * @desc stop flow
      */
-    private void stopFlow() {
-        // add hook to jvm shutdown
-        Runtime.getRuntime().addShutdownHook(new Thread(() -> flowMap.values().forEach(Flow::stop)));
+    public void stopFlow(FlowDTO flowDTO) {
+        flowMap.get(flowDTO.getFlowName()).stop();
     }
 
 }
