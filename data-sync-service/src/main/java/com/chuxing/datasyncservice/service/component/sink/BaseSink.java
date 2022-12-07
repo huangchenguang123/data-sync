@@ -42,6 +42,8 @@ public abstract class BaseSink {
         BaseSink baseSink;
         if (config.getType().equals(SinkEnum.CONSOLE_SINK.getName())) {
             baseSink = ConsoleSink.init(config);
+        } else if (config.getType().equals(SinkEnum.HTTP_SINK.getName())) {
+            baseSink = HttpSink.init(config);
         } else {
             throw new RuntimeException("sink type not support");
         }

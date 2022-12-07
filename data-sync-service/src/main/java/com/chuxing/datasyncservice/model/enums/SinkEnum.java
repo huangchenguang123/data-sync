@@ -18,6 +18,12 @@ public enum SinkEnum {
      */
     CONSOLE_SINK("ConsoleSink"),
 
+    /**
+     * @date 2022/11/23 16:04
+     * @desc HttpSink
+     */
+    HTTP_SINK("HttpSink"),
+
     ;
 
     /**
