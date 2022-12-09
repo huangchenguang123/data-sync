@@ -13,7 +13,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 /**
  * @date 2022/10/28 10:15
  * @author huangchenguang
- * @desc
+ * @desc ExpressChannel
  */
 @Getter
 @Setter
@@ -70,10 +70,9 @@ public class ExpressChannel extends BaseChannel {
     }
 
     /**
-     * start channel
-     *
      * @date 2022/10/25 15:42
      * @author huangchenguang
+     * @desc start channel
      */
     @Override
     public void start() {
@@ -81,10 +80,9 @@ public class ExpressChannel extends BaseChannel {
     }
 
     /**
-     * stop channel
-     *
      * @date 2022/10/25 15:42
      * @author huangchenguang
+     * @desc stop channel
      */
     @Override
     public void stop() {
@@ -92,10 +90,9 @@ public class ExpressChannel extends BaseChannel {
     }
 
     /**
-     * run
-     *
      * @date 2022/10/27 17:19
      * @author huangchenguang
+     * @desc run
      */
     @Override
     public void run(Map<String, Object> data) {
