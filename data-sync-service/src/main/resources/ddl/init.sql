@@ -3,7 +3,7 @@ create table flow
 (
     id        bigint auto_increment comment 'id'
         primary key,
-    flow_name varchar(50) not null comment 'flow name',
+    flow_name varchar(48) not null comment 'flow name',
     config    text        not null comment 'config value',
     enable    int         not null comment 'enable',
     create_at bigint      not null comment 'create timestamp',
