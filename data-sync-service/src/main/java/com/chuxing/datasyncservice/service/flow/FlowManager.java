@@ -10,6 +10,8 @@ import com.chuxing.datasyncservice.service.component.channel.BaseChannel;
 import com.chuxing.datasyncservice.service.component.sink.BaseSink;
 import com.chuxing.datasyncservice.service.component.source.BaseSource;
 import com.google.common.collect.Maps;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.annotation.DependsOn;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
@@ -23,6 +25,8 @@ import java.util.Objects;
  * @author huangchenguang
  * @desc FlowManager
  */
+@Slf4j
+@DependsOn("springUtils")
 @Component
 public class FlowManager {
 
@@ -63,7 +67,11 @@ public class FlowManager {
         // init component
         List<FlowDTO> flows = flowDAO.getAllFlow();
         for (FlowDTO flowDTO : flows) {
-            initFlow(flowDTO);
+            try {
+                initFlow(flowDTO);
+            } catch (Exception e) {
+                log.error("[FlowManager.initAllFlow] init flow fail, flow={}", JSON.toJSONString(flowDTO), e);
+            }
         }
     }
 

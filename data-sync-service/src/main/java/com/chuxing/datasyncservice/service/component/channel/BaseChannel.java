@@ -7,6 +7,7 @@ import lombok.Data;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * @date 2022/11/7 15:00
@@ -53,8 +54,10 @@ public abstract class BaseChannel {
      */
     public static BaseChannel init(ChannelConfig config) {
         BaseChannel baseChannel;
-        if (config.getType().equals(ChannelEnum.EXPRESS_CHANNEL.getName())) {
+        if (Objects.equals(config.getType(), ChannelEnum.EXPRESS_CHANNEL.getName())) {
             baseChannel = ExpressChannel.init(config);
+        } else if (Objects.equals(config.getType(), ChannelEnum.MAPPING_CHANNEL.getName())) {
+            baseChannel = MappingChannel.init(config);
         } else {
             throw new RuntimeException("not support channel type");
         }

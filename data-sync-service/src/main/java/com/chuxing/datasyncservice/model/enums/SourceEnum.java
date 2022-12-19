@@ -18,6 +18,12 @@ public enum SourceEnum {
      */
     NSQ_SOURCE("NsqSource"),
 
+    /**
+     * @date 2022/10/24 19:36
+     * @desc HttpSource
+     */
+    HTTP_SOURCE("HttpSource"),
+
     ;
 
     /**

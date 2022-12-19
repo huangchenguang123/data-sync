@@ -18,6 +18,12 @@ public enum ChannelEnum {
      */
     EXPRESS_CHANNEL("ExpressChannel"),
 
+    /**
+     * @date 2022/11/7 15:00
+     * @desc MappingChannel
+     */
+    MAPPING_CHANNEL("MappingChannel"),
+
     ;
 
     /**

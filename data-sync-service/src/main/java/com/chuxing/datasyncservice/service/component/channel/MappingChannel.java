@@ -1,7 +1,9 @@
 package com.chuxing.datasyncservice.service.component.channel;
 
 import com.alibaba.fastjson2.JSON;
+import com.chuxing.datasyncservice.model.config.ChannelConfig;
 import com.google.common.collect.Maps;
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
@@ -38,6 +40,7 @@ public class MappingChannel extends BaseChannel {
      * @author huangchenguang
      * @desc Mapping
      */
+    @Data
     private static class Mapping {
 
         /**
@@ -64,6 +67,15 @@ public class MappingChannel extends BaseChannel {
          */
         private String toType;
 
+    }
+
+    /**
+     * @date 2022/11/7 15:18
+     * @author huangchenguang
+     * @desc init mapping channel
+     */
+    public static MappingChannel init(ChannelConfig config) {
+        return JSON.parseObject(JSON.toJSONString(config.getConfig()), MappingChannel.class);
     }
 
     /**
@@ -97,7 +109,7 @@ public class MappingChannel extends BaseChannel {
         if (isRunning.get()) {
             mappings.forEach(mapping -> {
                 // get from
-                String[] fromNames = mapping.fromName.split("\\.");
+                String[] fromNames = mapping.getFromName().split("\\.");
                 Object current = data;
                 for (String name : fromNames) {
                     try {
@@ -111,12 +123,13 @@ public class MappingChannel extends BaseChannel {
                 }
                 Object object = null;
                 try {
-                    object = JSON.parseObject(JSON.toJSONString(current), Class.forName(mapping.toType));
+                    object = JSON.parseObject(JSON.toJSONString(current), Class.forName(mapping.getToType()));
                 } catch (ClassNotFoundException e) {
                     log.error("[MappingChannel.run] mapping error, mapping value error, current={}", current, e);
+                    throw new RuntimeException(e.getCause());
                 }
                 // put to
-                String[] toNames = mapping.toName.split("\\.");
+                String[] toNames = mapping.getToName().split("\\.");
                 current = data;
                 for (int i = 0; i < toNames.length; i++) {
                     try {
@@ -130,6 +143,7 @@ public class MappingChannel extends BaseChannel {
                         current = ((Map<String, Object>) current).get(toNames[i]);
                     } catch (Exception e) {
                         log.error("[MappingChannel.run] mapping error, current must be a map, current={}", current);
+                        throw new RuntimeException(e.getCause());
                     }
                 }
             });

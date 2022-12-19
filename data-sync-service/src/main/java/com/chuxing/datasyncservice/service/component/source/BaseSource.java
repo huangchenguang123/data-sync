@@ -7,6 +7,7 @@ import com.chuxing.datasyncservice.service.flow.Flow;
 import lombok.Data;
 
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * @date 2022/10/20 17:16
@@ -41,8 +42,10 @@ public abstract class BaseSource {
      */
     public static BaseSource init(ComponentConfig config) {
         BaseSource baseSource;
-        if (config.getType().equals(SourceEnum.NSQ_SOURCE.getName())) {
+        if (Objects.equals(config.getType(), SourceEnum.NSQ_SOURCE.getName())) {
             baseSource = NsqSource.init(config);
+        } else if (Objects.equals(config.getType(), SourceEnum.HTTP_SOURCE.getName())) {
+            baseSource = HttpSource.init(config);
         } else {
             throw new RuntimeException("source type is not supported");
         }

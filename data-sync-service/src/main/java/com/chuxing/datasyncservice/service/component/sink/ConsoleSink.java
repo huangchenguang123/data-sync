@@ -2,6 +2,7 @@ package com.chuxing.datasyncservice.service.component.sink;
 
 import com.alibaba.fastjson2.JSON;
 import com.chuxing.datasyncservice.model.config.ComponentConfig;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -11,6 +12,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
  * @author huangchenguang
  * @desc ConsoleSink
  */
+@Slf4j
 public class ConsoleSink extends BaseSink {
 
     /**
@@ -57,7 +59,7 @@ public class ConsoleSink extends BaseSink {
     @Override
     public void run(Map<String, Object> data) {
         if (isRunning.get()) {
-            System.out.println(JSON.toJSONString(data));
+            log.info(JSON.toJSONString(data));
         }
     }
 

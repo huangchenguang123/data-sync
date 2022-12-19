@@ -6,6 +6,7 @@ import com.chuxing.datasyncservice.service.flow.Flow;
 import lombok.Data;
 
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * @date 2022/11/23 15:28
@@ -40,9 +41,9 @@ public abstract class BaseSink {
      */
     public static BaseSink init(ComponentConfig config) {
         BaseSink baseSink;
-        if (config.getType().equals(SinkEnum.CONSOLE_SINK.getName())) {
+        if (Objects.equals(config.getType(), SinkEnum.CONSOLE_SINK.getName())) {
             baseSink = ConsoleSink.init(config);
-        } else if (config.getType().equals(SinkEnum.HTTP_SINK.getName())) {
+        } else if (Objects.equals(config.getType(), SinkEnum.HTTP_SINK.getName())) {
             baseSink = HttpSink.init(config);
         } else {
             throw new RuntimeException("sink type not support");

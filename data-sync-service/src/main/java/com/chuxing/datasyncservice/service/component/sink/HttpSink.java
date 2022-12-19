@@ -86,10 +86,10 @@ public class HttpSink extends BaseSink {
             try (Response response = okHttpClient.newCall(request).execute()) {
                 ResponseBody responseBody = response.body();
                 if (Objects.nonNull(responseBody)) {
-                    System.out.println(responseBody.string());
+                    log.info("[HttpSink.run] post http, url={}, params={}, result={}", url, JSON.toJSONString(data), responseBody.string());
                 }
             } catch (Exception e) {
-                log.error("[HttpSink.run] post error, params={}", JSON.toJSONString(data), e);
+                log.error("[HttpSink.run] post http, url={}, params={}", url, JSON.toJSONString(data), e);
             }
         }
     }
