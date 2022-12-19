@@ -55,6 +55,16 @@ public class FlowController {
     }
 
     /**
+     * @date 2022/12/19 10:58
+     * @author huangchenguang
+     * @desc update flow
+     */
+    @RequestMapping("update")
+    public Result<Boolean> update(@RequestBody @Valid FlowUpdateRequest flowRequest) {
+        return Result.success(flowService.update(flowRequest));
+    }
+
+    /**
      * @date 2022/11/25 16:01
      * @author huangchenguang
      * @desc delete flow

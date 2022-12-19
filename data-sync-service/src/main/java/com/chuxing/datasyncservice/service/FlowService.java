@@ -1,5 +1,6 @@
 package com.chuxing.datasyncservice.service;
 
+import com.alibaba.fastjson2.JSON;
 import com.chuxing.datasyncservice.dao.FlowDAO;
 import com.chuxing.datasyncservice.model.dto.FlowDTO;
 import com.chuxing.datasyncservice.model.rpc.common.Page;
@@ -7,6 +8,7 @@ import com.chuxing.datasyncservice.model.rpc.request.*;
 import com.chuxing.datasyncservice.model.rpc.response.FlowResponse;
 import com.chuxing.datasyncservice.service.flow.FlowManager;
 import com.chuxing.datasyncservice.utils.DateTimeUtils;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -19,6 +21,7 @@ import java.util.stream.Collectors;
  * @author huangchenguang
  * @desc FlowService
  */
+@Slf4j
 @Service
 public class FlowService {
 
@@ -95,6 +98,23 @@ public class FlowService {
                 .build();
 
         return flowDAO.createFlow(flowDTO) > 0;
+    }
+
+    /**
+     * @date 2022/11/24 17:26
+     * @author huangchenguang
+     * @desc update flow
+     */
+    public Boolean update(FlowUpdateRequest flowRequest) {
+        FlowDTO flowDTO = flowDAO.getFlow(flowRequest.getId());
+        if (Objects.isNull(flowDTO)) {
+            log.error("[FlowService.update] update fail, flow is empty, request={}", JSON.toJSONString(flowRequest));
+            throw new RuntimeException("[FlowService.update] update fail, flow is empty");
+        }
+        flowDTO.setFlowName(flowRequest.getFlowName());
+        flowDTO.setConfig(flowRequest.getConfig());
+        flowDTO.setUpdateAt(System.currentTimeMillis());
+        return flowDAO.updateFlow(flowDTO) > 0;
     }
 
     /**

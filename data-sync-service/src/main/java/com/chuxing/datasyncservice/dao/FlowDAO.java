@@ -32,6 +32,16 @@ public interface FlowDAO {
     Integer createFlow(@Param("flow") FlowDTO flowDTO);
 
     /**
+     * update flow
+     *
+     * @date 2022/11/24 17:34
+     * @author huangchenguang
+     * @param flowDTO flowDTO
+     * @return update count number
+     */
+    Integer updateFlow(@Param("flow") FlowDTO flowDTO);
+
+    /**
      * get flow
      *
      * @date 2022/11/25 10:10

@@ -27,6 +27,13 @@
         (#{flow.flowName}, #{flow.config}, #{flow.enable}, #{flow.createAt}, #{flow.updateAt})
         ;
     </insert>
+
+    <update id="updateFlow">
+        update flow
+        set flow_name = #{flow.flowName}, config = #{flow.config}
+        where id = #{flowId}
+        ;
+    </update>
     
     <select id="getFlow" resultMap="BaseResultMap">
         select id, flow_name, config, enable, create_at, update_at
