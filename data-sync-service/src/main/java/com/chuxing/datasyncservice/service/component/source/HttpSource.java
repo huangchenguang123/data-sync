@@ -24,15 +24,6 @@ public class HttpSource extends BaseSource {
     private String url;
 
     /**
-     * @date 2022/10/20 17:27
-     * @author huangchenguang
-     * @desc init nsq source
-     */
-    public static BaseSource init(ComponentConfig config) {
-        return JSON.parseObject(JSON.toJSONString(config.getConfig()), HttpSource.class);
-    }
-
-    /**
      * @date 2022/12/16 15:39
      * @author huangchenguang
      * @desc start

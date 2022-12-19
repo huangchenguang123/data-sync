@@ -45,15 +45,6 @@ public class NsqSource extends BaseSource {
     private Subscriber subscriber;
 
     /**
-     * @date 2022/10/20 17:27
-     * @author huangchenguang
-     * @desc init nsq source
-     */
-    public static BaseSource init(ComponentConfig config) {
-        return JSON.parseObject(JSON.toJSONString(config.getConfig()), NsqSource.class);
-    }
-
-    /**
      * @date 2022/10/24 19:28
      * @author huangchenguang
      * @desc start

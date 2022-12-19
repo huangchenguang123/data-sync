@@ -1,5 +1,6 @@
 package com.chuxing.datasyncservice.service.component.channel;
 
+import com.alibaba.fastjson2.JSON;
 import com.chuxing.datasyncservice.model.config.ChannelConfig;
 import com.chuxing.datasyncservice.model.enums.ChannelEnum;
 import com.chuxing.datasyncservice.service.flow.Flow;
@@ -55,10 +56,13 @@ public abstract class BaseChannel {
     public static BaseChannel init(ChannelConfig config) {
         BaseChannel baseChannel;
         if (Objects.equals(config.getType(), ChannelEnum.EXPRESS_CHANNEL.getName())) {
-            baseChannel = ExpressChannel.init(config);
+            baseChannel = JSON.parseObject(JSON.toJSONString(config.getConfig()), ExpressChannel.class);
         } else if (Objects.equals(config.getType(), ChannelEnum.MAPPING_CHANNEL.getName())) {
-            baseChannel = MappingChannel.init(config);
-        } else {
+            baseChannel = JSON.parseObject(JSON.toJSONString(config.getConfig()), MappingChannel.class);
+        } else if (Objects.equals(config.getType(), ChannelEnum.FUNCTION_CHANNEL.getName())) {
+            baseChannel = JSON.parseObject(JSON.toJSONString(config.getConfig()), FunctionChannel.class);
+        }
+        else {
             throw new RuntimeException("not support channel type");
         }
         baseChannel.setId(config.getId());

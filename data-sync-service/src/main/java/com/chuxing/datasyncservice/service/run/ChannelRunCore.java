@@ -32,20 +32,20 @@ public class ChannelRunCore {
     /**
      * @date 2022/11/9 15:12
      * @author huangchenguang
-     * @desc submit first job to thread pool
+     * @desc execute first job to thread pool
      */
-    public static void submit(Flow flow, Map<String, Object> data) {
+    public static void execute(Flow flow, Map<String, Object> data) {
         List<JobNode> job = initJob(flow, data);
-        job.forEach(THREAD_POOL_EXECUTOR::submit);
+        job.forEach(THREAD_POOL_EXECUTOR::execute);
     }
 
     /**
      * @date 2022/11/10 16:39
      * @author huangchenguang
-     * @desc submit running task to thread pool
+     * @desc execute running task to thread pool
      */
-    public static void submit(JobNode jobNode) {
-        THREAD_POOL_EXECUTOR.submit(jobNode);
+    public static void execute(JobNode jobNode) {
+        THREAD_POOL_EXECUTOR.execute(jobNode);
     }
 
     /**
@@ -60,7 +60,7 @@ public class ChannelRunCore {
             jobNode.setBaseChannel(baseChannel);
             jobNode.setData(data);
             return jobNode;
-        }).collect(Collectors.toMap(jobNode -> jobNode.getBaseChannel().getId(), Function.identity()));
+        }).collect(Collectors.toMap(jobNode -> jobNode.getBaseChannel().getId(), Function.identity(), (a, b) -> a));
         // init preJobNodes and nextJobNodes
         flow.getBaseChannels().values().forEach(baseChannel -> {
             // init preJobNodes

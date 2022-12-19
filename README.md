@@ -15,3 +15,5 @@ npm run dev
 2. dynamic shunt and shadow mode
 3. add more component
 4. UT
+5. sync invoke
+6. fix dfs object and use same code

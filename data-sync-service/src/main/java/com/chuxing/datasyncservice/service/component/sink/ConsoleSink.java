@@ -1,7 +1,6 @@
 package com.chuxing.datasyncservice.service.component.sink;
 
 import com.alibaba.fastjson2.JSON;
-import com.chuxing.datasyncservice.model.config.ComponentConfig;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.Map;
@@ -20,15 +19,6 @@ public class ConsoleSink extends BaseSink {
      * @desc sink run flag
      */
     private final AtomicBoolean isRunning = new AtomicBoolean(false);
-
-    /**
-     * @date 2022/11/23 16:09
-     * @author huangchenguang
-     * @desc init console sink
-     */
-    public static BaseSink init(ComponentConfig config) {
-        return JSON.parseObject(JSON.toJSONString(config.getConfig()), ConsoleSink.class);
-    }
 
     /**
      * @date 2022/10/25 15:42

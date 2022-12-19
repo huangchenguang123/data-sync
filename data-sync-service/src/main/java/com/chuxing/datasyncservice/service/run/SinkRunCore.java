@@ -31,10 +31,10 @@ public class SinkRunCore {
     /**
      * @date 2022/11/23 16:39
      * @author huangchenguang
-     * @desc submit
+     * @desc execute
      */
-    public static void submit(Flow flow, Map<String, Object> data) {
-        flow.getBaseSinks().values().forEach(baseSink -> THREAD_POOL_EXECUTOR.submit(() -> baseSink.run(data)));
+    public static void execute(Flow flow, Map<String, Object> data) {
+        flow.getBaseSinks().values().forEach(baseSink -> THREAD_POOL_EXECUTOR.execute(() -> baseSink.run(data)));
     }
 
 }

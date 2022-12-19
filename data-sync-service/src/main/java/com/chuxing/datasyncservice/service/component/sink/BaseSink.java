@@ -1,5 +1,6 @@
 package com.chuxing.datasyncservice.service.component.sink;
 
+import com.alibaba.fastjson2.JSON;
 import com.chuxing.datasyncservice.model.config.ComponentConfig;
 import com.chuxing.datasyncservice.model.enums.SinkEnum;
 import com.chuxing.datasyncservice.service.flow.Flow;
@@ -42,9 +43,9 @@ public abstract class BaseSink {
     public static BaseSink init(ComponentConfig config) {
         BaseSink baseSink;
         if (Objects.equals(config.getType(), SinkEnum.CONSOLE_SINK.getName())) {
-            baseSink = ConsoleSink.init(config);
+            baseSink = JSON.parseObject(JSON.toJSONString(config.getConfig()), ConsoleSink.class);
         } else if (Objects.equals(config.getType(), SinkEnum.HTTP_SINK.getName())) {
-            baseSink = HttpSink.init(config);
+            baseSink = JSON.parseObject(JSON.toJSONString(config.getConfig()), HttpSink.class);
         } else {
             throw new RuntimeException("sink type not support");
         }

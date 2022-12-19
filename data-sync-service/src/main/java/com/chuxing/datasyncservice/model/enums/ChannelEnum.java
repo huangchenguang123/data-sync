@@ -24,6 +24,12 @@ public enum ChannelEnum {
      */
     MAPPING_CHANNEL("MappingChannel"),
 
+    /**
+     * @date 2022/11/7 15:00
+     * @desc FunctionChannel
+     */
+    FUNCTION_CHANNEL("FunctionChannel"),
+
     ;
 
     /**

@@ -58,16 +58,16 @@ public class JobNode implements Runnable {
             synchronized(remainingJobNodes) {
                 remainingJobNodes.remove(this);
                 if (remainingJobNodes.isEmpty()) {
-                    SinkRunCore.submit(baseChannel.getFlow(), data);
+                    SinkRunCore.execute(baseChannel.getFlow(), data);
                 }
             }
-            // remove myself from next job node and submit
+            // remove myself from next job node and execute
             nextJobNodes.forEach(nextJobNode -> {
                 // prevent duplicate submissions
                 synchronized (data) {
                     nextJobNode.getPreJobNodes().remove(this);
                     if (nextJobNode.getPreJobNodes().isEmpty()) {
-                        ChannelRunCore.submit(nextJobNode);
+                        ChannelRunCore.execute(nextJobNode);
                     }
                 }
             });

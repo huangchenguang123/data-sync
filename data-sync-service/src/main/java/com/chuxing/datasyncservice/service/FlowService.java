@@ -9,6 +9,7 @@ import com.chuxing.datasyncservice.model.rpc.response.FlowResponse;
 import com.chuxing.datasyncservice.service.flow.FlowManager;
 import com.chuxing.datasyncservice.utils.DateTimeUtils;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -28,8 +29,18 @@ public class FlowService {
     @Resource
     private FlowDAO flowDAO;
 
+    @Lazy
     @Resource
     private FlowManager flowManager;
+
+    /**
+     * @date 2022/12/19 16:10
+     * @author huangchenguang
+     * @desc get all flow
+     */
+    public List<FlowDTO> getAllFlow() {
+        return flowDAO.getAllFlow();
+    }
 
     /**
      * @date 2022/11/25 10:09
@@ -109,7 +120,7 @@ public class FlowService {
         FlowDTO flowDTO = flowDAO.getFlow(flowRequest.getId());
         if (Objects.isNull(flowDTO)) {
             log.error("[FlowService.update] update fail, flow is empty, request={}", JSON.toJSONString(flowRequest));
-            throw new RuntimeException("[FlowService.update] update fail, flow is empty");
+            throw new RuntimeException("update fail, flow is empty");
         }
         flowDTO.setFlowName(flowRequest.getFlowName());
         flowDTO.setConfig(flowRequest.getConfig());

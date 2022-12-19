@@ -1,5 +1,6 @@
 package com.chuxing.datasyncservice.service.component.source;
 
+import com.alibaba.fastjson2.JSON;
 import com.chuxing.datasyncservice.model.config.ComponentConfig;
 import com.chuxing.datasyncservice.model.enums.SourceEnum;
 import com.chuxing.datasyncservice.service.run.ChannelRunCore;
@@ -43,9 +44,9 @@ public abstract class BaseSource {
     public static BaseSource init(ComponentConfig config) {
         BaseSource baseSource;
         if (Objects.equals(config.getType(), SourceEnum.NSQ_SOURCE.getName())) {
-            baseSource = NsqSource.init(config);
+            baseSource = JSON.parseObject(JSON.toJSONString(config.getConfig()), NsqSource.class);
         } else if (Objects.equals(config.getType(), SourceEnum.HTTP_SOURCE.getName())) {
-            baseSource = HttpSource.init(config);
+            baseSource = JSON.parseObject(JSON.toJSONString(config.getConfig()), HttpSource.class);
         } else {
             throw new RuntimeException("source type is not supported");
         }
@@ -76,7 +77,7 @@ public abstract class BaseSource {
      * @desc source run
      */
     public void run(Map<String, Object> data) {
-        ChannelRunCore.submit(flow, data);
+        ChannelRunCore.execute(flow, data);
     }
 
 }

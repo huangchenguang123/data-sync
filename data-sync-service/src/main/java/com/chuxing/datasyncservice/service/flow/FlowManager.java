@@ -1,16 +1,17 @@
 package com.chuxing.datasyncservice.service.flow;
 
 import com.alibaba.fastjson2.JSON;
-import com.chuxing.datasyncservice.dao.FlowDAO;
 import com.chuxing.datasyncservice.model.config.ChannelConfig;
 import com.chuxing.datasyncservice.model.config.ComponentConfig;
 import com.chuxing.datasyncservice.model.config.FlowConfig;
 import com.chuxing.datasyncservice.model.dto.FlowDTO;
+import com.chuxing.datasyncservice.service.FlowService;
 import com.chuxing.datasyncservice.service.component.channel.BaseChannel;
 import com.chuxing.datasyncservice.service.component.sink.BaseSink;
 import com.chuxing.datasyncservice.service.component.source.BaseSource;
 import com.google.common.collect.Maps;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.DependsOn;
 import org.springframework.stereotype.Component;
 
@@ -30,12 +31,8 @@ import java.util.Objects;
 @Component
 public class FlowManager {
 
-    /**
-     * @date 2022/10/24 16:47
-     * @desc flowDAO
-     */
-    @Resource
-    private FlowDAO flowDAO;
+    @Autowired
+    private FlowService flowService;
 
     /**
      * @date 2022/10/28 10:56
@@ -65,7 +62,7 @@ public class FlowManager {
         flowMap = Maps.newConcurrentMap();
 
         // init component
-        List<FlowDTO> flows = flowDAO.getAllFlow();
+        List<FlowDTO> flows = flowService.getAllFlow();
         for (FlowDTO flowDTO : flows) {
             try {
                 initFlow(flowDTO);

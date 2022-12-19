@@ -56,17 +56,8 @@ public class ExpressChannel extends BaseChannel {
          * @date 2022/11/9 14:53
          * @desc result
          */
-        private String result;
+        private String resultName;
 
-    }
-
-    /**
-     * @date 2022/11/7 15:18
-     * @author huangchenguang
-     * @desc init express channel
-     */
-    public static ExpressChannel init(ChannelConfig config) {
-        return JSON.parseObject(JSON.toJSONString(config.getConfig()), ExpressChannel.class);
     }
 
     /**
@@ -101,7 +92,7 @@ public class ExpressChannel extends BaseChannel {
             // init context
             context.putAll(data);
             try {
-                data.put(qle.getResult(), runner.execute(qle.getScript(), context, null, false, false));
+                data.put(qle.getResultName(), runner.execute(qle.getScript(), context, null, false, false));
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }

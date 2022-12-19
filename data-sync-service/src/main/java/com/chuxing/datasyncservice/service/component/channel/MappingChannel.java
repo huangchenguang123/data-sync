@@ -1,7 +1,6 @@
 package com.chuxing.datasyncservice.service.component.channel;
 
 import com.alibaba.fastjson2.JSON;
-import com.chuxing.datasyncservice.model.config.ChannelConfig;
 import com.google.common.collect.Maps;
 import lombok.Data;
 import lombok.Getter;
@@ -67,15 +66,6 @@ public class MappingChannel extends BaseChannel {
          */
         private String toType;
 
-    }
-
-    /**
-     * @date 2022/11/7 15:18
-     * @author huangchenguang
-     * @desc init mapping channel
-     */
-    public static MappingChannel init(ChannelConfig config) {
-        return JSON.parseObject(JSON.toJSONString(config.getConfig()), MappingChannel.class);
     }
 
     /**

@@ -40,15 +40,6 @@ public class HttpSink extends BaseSink {
     private OkHttpClient okHttpClient;
 
     /**
-     * @date 2022/11/23 16:09
-     * @author huangchenguang
-     * @desc init http sink
-     */
-    public static BaseSink init(ComponentConfig config) {
-        return JSON.parseObject(JSON.toJSONString(config.getConfig()), HttpSink.class);
-    }
-
-    /**
      * @date 2022/12/7 11:20
      * @author huangchenguang
      * @desc start sink
