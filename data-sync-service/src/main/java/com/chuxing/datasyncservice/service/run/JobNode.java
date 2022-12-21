@@ -1,6 +1,7 @@
 package com.chuxing.datasyncservice.service.run;
 
 import com.chuxing.datasyncservice.service.component.channel.BaseChannel;
+import com.chuxing.datasyncservice.service.context.Context;
 import lombok.Data;
 
 import java.util.List;
@@ -39,6 +40,13 @@ public class JobNode implements Runnable {
     private Map<String, Object> data;
 
     /**
+     * @date 2022/12/21 15:42
+     * @author huangchenguang
+     * @desc context
+     */
+    private Context context;
+
+    /**
      * @date 2022/11/23 16:24
      * @desc remainingJobNodes
      */
@@ -58,7 +66,7 @@ public class JobNode implements Runnable {
             synchronized(remainingJobNodes) {
                 remainingJobNodes.remove(this);
                 if (remainingJobNodes.isEmpty()) {
-                    SinkRunCore.execute(baseChannel.getFlow(), data);
+                    SinkRunCore.execute(baseChannel.getFlow(), data, context);
                 }
             }
             // remove myself from next job node and execute

@@ -1,5 +1,6 @@
 package com.chuxing.datasyncservice.service.run;
 
+import com.chuxing.datasyncservice.service.context.Context;
 import com.chuxing.datasyncservice.service.flow.Flow;
 import com.google.common.collect.Lists;
 
@@ -34,8 +35,8 @@ public class ChannelRunCore {
      * @author huangchenguang
      * @desc execute first job to thread pool
      */
-    public static void execute(Flow flow, Map<String, Object> data) {
-        List<JobNode> job = initJob(flow, data);
+    public static void execute(Flow flow, Map<String, Object> data, Context context) {
+        List<JobNode> job = initJob(flow, data, context);
         job.forEach(THREAD_POOL_EXECUTOR::execute);
     }
 
@@ -53,12 +54,13 @@ public class ChannelRunCore {
      * @author huangchenguang
      * @desc init job
      */
-    private static List<JobNode> initJob(Flow flow, Map<String, Object> data) {
+    private static List<JobNode> initJob(Flow flow, Map<String, Object> data, Context context) {
         // init jobNodeMap
         Map<Integer, JobNode> jobNodeMap = flow.getBaseChannels().values().stream().map(baseChannel -> {
             JobNode jobNode = new JobNode();
             jobNode.setBaseChannel(baseChannel);
             jobNode.setData(data);
+            jobNode.setContext(context);
             return jobNode;
         }).collect(Collectors.toMap(jobNode -> jobNode.getBaseChannel().getId(), Function.identity(), (a, b) -> a));
         // init preJobNodes and nextJobNodes

@@ -1,8 +1,10 @@
 package com.chuxing.datasyncservice.service.run;
 
+import com.chuxing.datasyncservice.service.context.Context;
 import com.chuxing.datasyncservice.service.flow.Flow;
 
 import java.util.Map;
+import java.util.Objects;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadPoolExecutor;
@@ -33,8 +35,9 @@ public class SinkRunCore {
      * @author huangchenguang
      * @desc execute
      */
-    public static void execute(Flow flow, Map<String, Object> data) {
+    public static void execute(Flow flow, Map<String, Object> data, Context context) {
         flow.getBaseSinks().values().forEach(baseSink -> THREAD_POOL_EXECUTOR.execute(() -> baseSink.run(data)));
+        context.success(data);
     }
 
 }

@@ -1,7 +1,5 @@
 package com.chuxing.datasyncservice.service.component.source;
 
-import com.alibaba.fastjson2.JSON;
-import com.chuxing.datasyncservice.model.config.ComponentConfig;
 import com.chuxing.datasyncservice.service.run.HttpSourceRunCore;
 import com.chuxing.datasyncservice.utils.SpringUtils;
 import lombok.Getter;
@@ -22,6 +20,13 @@ public class HttpSource extends BaseSource {
      * @desc url
      */
     private String url;
+
+    /**
+     * @date 2022/12/21 15:01
+     * @author huangchenguang
+     * @desc async
+     */
+    private Boolean async;
 
     /**
      * @date 2022/12/16 15:39

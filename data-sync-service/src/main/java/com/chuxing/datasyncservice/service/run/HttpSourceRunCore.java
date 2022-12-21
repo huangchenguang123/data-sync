@@ -2,7 +2,10 @@ package com.chuxing.datasyncservice.service.run;
 
 import com.chuxing.datasyncservice.model.rpc.common.Result;
 import com.chuxing.datasyncservice.service.component.source.HttpSource;
+import com.chuxing.datasyncservice.service.context.Context;
+import com.chuxing.datasyncservice.utils.ThreadUtils;
 import com.google.common.collect.Maps;
+import org.apache.commons.lang3.BooleanUtils;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -42,12 +45,22 @@ public class HttpSourceRunCore {
      * @desc input core
      */
     @RequestMapping("/source/{path}")
-    public Result<Boolean> input(@PathVariable String path, @RequestBody Map<String, Object> data) {
+    public Result<?> input(@PathVariable String path, @RequestBody Map<String, Object> data) {
         if (proxy.containsKey(path)) {
-            proxy.get(path).run(data);
-            return Result.success(true);
+            Context context = Context.init();
+            HttpSource source = proxy.get(path);
+            if (BooleanUtils.isNotTrue(source.getAsync())) {
+                source.run(data, context);
+                return Result.success(true);
+            } else {
+                source.run(data, context);
+                while (BooleanUtils.isNotTrue(context.getSuccessful())) {
+                    ThreadUtils.sleep(10L);
+                }
+                return Result.success(context.getResult());
+            }
         } else {
-            return Result.fail("unknown path, please check your url");
+            return Result.fail("please check your url");
         }
     }
 

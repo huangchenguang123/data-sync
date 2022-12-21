@@ -3,6 +3,7 @@ package com.chuxing.datasyncservice.service.component.source;
 import com.alibaba.fastjson2.JSON;
 import com.chuxing.datasyncservice.model.config.ComponentConfig;
 import com.chuxing.datasyncservice.model.enums.SourceEnum;
+import com.chuxing.datasyncservice.service.context.Context;
 import com.chuxing.datasyncservice.service.run.ChannelRunCore;
 import com.chuxing.datasyncservice.service.flow.Flow;
 import lombok.Data;
@@ -76,8 +77,8 @@ public abstract class BaseSource {
      * @author huangchenguang
      * @desc source run
      */
-    public void run(Map<String, Object> data) {
-        ChannelRunCore.execute(flow, data);
+    public void run(Map<String, Object> data, Context context) {
+        ChannelRunCore.execute(flow, data, context);
     }
 
 }
