@@ -1,6 +1,7 @@
 package com.chuxing.datasyncservice.service.component.channel;
 
 import com.alibaba.fastjson2.JSON;
+import com.chuxing.datasyncservice.utils.ObjectUtils;
 import com.google.common.collect.Maps;
 import lombok.Data;
 import lombok.Getter;
@@ -99,43 +100,14 @@ public class MappingChannel extends BaseChannel {
         if (isRunning.get()) {
             mappings.forEach(mapping -> {
                 // get from
-                String[] fromNames = mapping.getFromName().split("\\.");
-                Object current = data;
-                for (String name : fromNames) {
-                    try {
-                        current = ((Map<String, Object>) current).get(name);
-                        if (Objects.isNull(current)) {
-                            break;
-                        }
-                    } catch (Exception e) {
-                        log.error("[MappingChannel.run] mapping error, current must be a map, current={}", current, e);
-                    }
-                }
-                Object object = null;
+                Object current = ObjectUtils.get(data, mapping.getFromName());
                 try {
-                    object = JSON.parseObject(JSON.toJSONString(current), Class.forName(mapping.getToType()));
+                    current = JSON.parseObject(JSON.toJSONString(current), Class.forName(mapping.getToType()));
                 } catch (ClassNotFoundException e) {
                     log.error("[MappingChannel.run] mapping error, mapping value error, current={}", current, e);
                     throw new RuntimeException(e.getCause());
                 }
-                // put to
-                String[] toNames = mapping.getToName().split("\\.");
-                current = data;
-                for (int i = 0; i < toNames.length; i++) {
-                    try {
-                        if (!((Map<String, Object>) current).containsKey(toNames[i])) {
-                            if (i == toNames.length - 1) {
-                                ((Map<String, Object>) current).put(toNames[i], object);
-                            } else {
-                                ((Map<String, Object>) current).put(toNames[i], Maps.newHashMap());
-                            }
-                        }
-                        current = ((Map<String, Object>) current).get(toNames[i]);
-                    } catch (Exception e) {
-                        log.error("[MappingChannel.run] mapping error, current must be a map, current={}", current);
-                        throw new RuntimeException(e.getCause());
-                    }
-                }
+                ObjectUtils.set(data, mapping.getToName(), current);
             });
         }
     }
