@@ -11,7 +11,6 @@ import com.chuxing.datasyncservice.service.component.sink.BaseSink;
 import com.chuxing.datasyncservice.service.component.source.BaseSource;
 import com.google.common.collect.Maps;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.DependsOn;
 import org.springframework.stereotype.Component;
 
@@ -31,7 +30,7 @@ import java.util.Objects;
 @Component
 public class FlowManager {
 
-    @Autowired
+    @Resource
     private FlowService flowService;
 
     /**

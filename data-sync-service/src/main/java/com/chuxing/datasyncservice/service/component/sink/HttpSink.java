@@ -1,7 +1,6 @@
 package com.chuxing.datasyncservice.service.component.sink;
 
 import com.alibaba.fastjson2.JSON;
-import com.chuxing.datasyncservice.model.config.ComponentConfig;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;

@@ -23,7 +23,6 @@ public class FunctionManager {
 
     /**
      * @date 2022/12/19 15:55
-     * @author huangchenguang
      * @desc functionMap
      */
     private static final Map<String, String> FUNCTION_MAP = Maps.newConcurrentMap();

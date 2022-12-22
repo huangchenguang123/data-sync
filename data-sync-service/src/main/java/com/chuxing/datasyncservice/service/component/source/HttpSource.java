@@ -16,14 +16,12 @@ public class HttpSource extends BaseSource {
 
     /**
      * @date 2022/12/16 14:55
-     * @author huangchenguang
      * @desc url
      */
     private String url;
 
     /**
      * @date 2022/12/21 15:01
-     * @author huangchenguang
      * @desc async
      */
     private Boolean async;

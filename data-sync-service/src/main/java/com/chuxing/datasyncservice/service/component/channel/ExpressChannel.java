@@ -1,7 +1,5 @@
 package com.chuxing.datasyncservice.service.component.channel;
 
-import com.alibaba.fastjson2.JSON;
-import com.chuxing.datasyncservice.model.config.ChannelConfig;
 import com.ql.util.express.DefaultContext;
 import com.ql.util.express.ExpressRunner;
 import lombok.Getter;

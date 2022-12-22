@@ -24,7 +24,6 @@ public class HttpSourceRunCore {
 
     /**
      * @date 2022/12/16 15:28
-     * @author huangchenguang
      * @desc http source proxy
      */
     private Map<String, HttpSource> proxy;

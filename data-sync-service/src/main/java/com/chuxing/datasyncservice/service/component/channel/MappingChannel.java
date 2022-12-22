@@ -2,7 +2,6 @@ package com.chuxing.datasyncservice.service.component.channel;
 
 import com.alibaba.fastjson2.JSON;
 import com.chuxing.datasyncservice.utils.ObjectUtils;
-import com.google.common.collect.Maps;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
@@ -10,7 +9,6 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
@@ -95,7 +93,6 @@ public class MappingChannel extends BaseChannel {
      * @desc run
      */
     @Override
-    @SuppressWarnings("unchecked")
     public void run(Map<String, Object> data) {
         if (isRunning.get()) {
             mappings.forEach(mapping -> {

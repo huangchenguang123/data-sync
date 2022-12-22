@@ -21,9 +21,9 @@ public class FlowUpdateRequest implements Serializable {
 
     /**
      * @date 2022/12/19 10:58
-     * @author huangchenguang
      * @desc id
      */
+    @NotNull
     private Long id;
 
     /**

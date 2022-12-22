@@ -33,14 +33,12 @@ public class FunctionChannel extends BaseChannel {
 
     /**
      * @date 2022/12/19 16:06
-     * @author huangchenguang
      * @desc runner
      */
     private ExpressRunner runner = new ExpressRunner();
 
     /**
      * @date 2022/12/19 15:46
-     * @author huangchenguang
      * @desc functions
      */
     private List<Function> functions;
@@ -55,21 +53,18 @@ public class FunctionChannel extends BaseChannel {
 
         /**
          * @date 2022/12/19 15:45
-         * @author huangchenguang
          * @desc function name
          */
         private String functionName;
 
         /**
          * @date 2022/12/19 15:45
-         * @author huangchenguang
          * @desc params
          */
         private List<String> params;
 
         /**
          * @date 2022/12/19 15:50
-         * @author huangchenguang
          * @desc resultName
          */
         private String resultName;
@@ -102,7 +97,6 @@ public class FunctionChannel extends BaseChannel {
      * @desc run
      */
     @Override
-    @SuppressWarnings("unchecked")
     public void run(Map<String, Object> data) {
         if (isRunning.get()) {
             functions.forEach(function -> {

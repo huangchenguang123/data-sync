@@ -2,7 +2,6 @@ package com.chuxing.datasyncservice.service.component.source;
 
 import com.alibaba.fastjson2.JSON;
 import com.alibaba.fastjson2.TypeReference;
-import com.chuxing.datasyncservice.model.config.ComponentConfig;
 import com.chuxing.datasyncservice.service.context.Context;
 import com.sproutsocial.nsq.MessageDataHandler;
 import com.sproutsocial.nsq.Subscriber;

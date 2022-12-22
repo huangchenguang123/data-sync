@@ -12,14 +12,12 @@ public class Context {
 
     /**
      * @date 2022/12/21 15:30
-     * @author huangchenguang
      * @desc successful
      */
     private Boolean successful;
 
     /**
      * @date 2022/12/21 15:37
-     * @author huangchenguang
      * @desc result
      */
     private Object result;
@@ -33,6 +31,11 @@ public class Context {
         return new Context();
     }
 
+    /**
+     * @date 2022/12/22 09:39
+     * @author huangchenguang
+     * @desc success
+     */
     public void success(Object result) {
         this.result = result;
         successful = true;

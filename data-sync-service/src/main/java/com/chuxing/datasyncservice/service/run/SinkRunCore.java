@@ -4,7 +4,6 @@ import com.chuxing.datasyncservice.service.context.Context;
 import com.chuxing.datasyncservice.service.flow.Flow;
 
 import java.util.Map;
-import java.util.Objects;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadPoolExecutor;

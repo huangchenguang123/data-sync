@@ -20,7 +20,6 @@ public class FunctionDTO implements Serializable {
 
     /**
      * @date 2022/12/19 16:31
-     * @author huangchenguang
      * @desc serialVersionUID
      */
     private static final long serialVersionUID = 6910395388013381209L;
