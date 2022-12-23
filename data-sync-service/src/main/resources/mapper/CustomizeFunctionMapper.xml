@@ -56,6 +56,7 @@
         set function_name = #{functionDTO.functionName},
             script = #{functionDTO.script},
             update_at = #{functionDTO.updateAt}
+            where id = #{functionDTO.id}
     </insert>
 
     <delete id="deleteFunctionById">
@@ -63,6 +64,7 @@
         set function_name = #{functionDTO.functionName},
             script = #{functionDTO.script},
             update_at = #{functionDTO.updateAt}
+        where id = #{functionId}
     </delete>
 
 </mapper>

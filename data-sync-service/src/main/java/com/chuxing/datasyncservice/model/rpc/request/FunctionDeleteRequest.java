@@ -24,6 +24,6 @@ public class FunctionDeleteRequest implements Serializable {
      * @desc flowId
      */
     @NotNull
-    private Long functionId;
+    private Long id;
 
 }

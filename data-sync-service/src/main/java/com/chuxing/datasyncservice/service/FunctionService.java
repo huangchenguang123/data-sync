@@ -126,7 +126,7 @@ public class FunctionService {
      * @desc delete function
      */
     public Boolean delete(FunctionDeleteRequest functionDeleteRequest) {
-        return functionDAO.deleteFunctionById(functionDeleteRequest.getFunctionId()) > 0;
+        return functionDAO.deleteFunctionById(functionDeleteRequest.getId()) > 0;
     }
 
 }
