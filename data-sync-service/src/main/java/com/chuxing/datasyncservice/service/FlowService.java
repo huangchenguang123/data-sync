@@ -48,7 +48,7 @@ public class FlowService {
      * @desc get flow
      */
     public FlowResponse get(FlowGetRequest flowGetRequest) {
-        FlowDTO flowDTO = flowDAO.getFlow(flowGetRequest.getFlowId());
+        FlowDTO flowDTO = flowDAO.getFlowById(flowGetRequest.getFlowId());
         if (Objects.isNull(flowDTO)) {
             return null;
         }
@@ -117,7 +117,7 @@ public class FlowService {
      * @desc update flow
      */
     public Boolean update(FlowUpdateRequest flowRequest) {
-        FlowDTO flowDTO = flowDAO.getFlow(flowRequest.getId());
+        FlowDTO flowDTO = flowDAO.getFlowById(flowRequest.getId());
         if (Objects.isNull(flowDTO)) {
             log.error("[FlowService.update] update fail, flow is empty, request={}", JSON.toJSONString(flowRequest));
             throw new RuntimeException("update fail, flow is empty");
@@ -134,7 +134,7 @@ public class FlowService {
      * @desc delete
      */
     public Boolean delete(FlowDeleteRequest flowRequest) {
-        return flowDAO.deleteFlow(flowRequest.getFlowId()) > 0;
+        return flowDAO.deleteFlowById(flowRequest.getFlowId()) > 0;
     }
 
     /**
@@ -144,7 +144,7 @@ public class FlowService {
      */
     public Boolean enable(FlowEnableRequest flowRequest) {
         boolean result = flowDAO.enableFlow(flowRequest.getFlowId(), flowRequest.getEnable() ? 1 : 0) > 0;
-        FlowDTO flowDTO = flowDAO.getFlow(flowRequest.getFlowId());
+        FlowDTO flowDTO = flowDAO.getFlowById(flowRequest.getFlowId());
         if (flowRequest.getEnable()) {
             flowManager.stopFlow(flowDTO);
             flowManager.initFlow(flowDTO);

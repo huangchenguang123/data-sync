@@ -30,12 +30,12 @@
 
     <update id="updateFlow">
         update flow
-        set flow_name = #{flow.flowName}, config = #{flow.config}
+        set flow_name = #{flow.flowName}, config = #{flow.config}, update_at = #{flow.updateAt}
         where id = #{flowId}
         ;
     </update>
     
-    <select id="getFlow" resultMap="BaseResultMap">
+    <select id="getFlowById" resultMap="BaseResultMap">
         select id, flow_name, config, enable, create_at, update_at
         from flow
         where id = #{flowId}
@@ -46,8 +46,9 @@
         select id, flow_name, config, enable, create_at, update_at
         from flow
         <if test="flowName != null and flowName != ''">
-            where flow_name like concat('%', #{flowName}, '%')
+            where flow_name like concat('%', '/' #{flowName}, '%') escape '/'
         </if>
+        order by update_at
         limit #{offset}, #{limit}
         ;
     </select>
@@ -56,12 +57,12 @@
         select count(1)
         from flow
         <if test="flowName != null and flowName != ''">
-            where flow_name like concat('%', #{flowName}, '%')
+            where flow_name like concat('%', '/' #{flowName}, '%') escape '/'
         </if>
         ;
     </select>
 
-    <delete id="deleteFlow">
+    <delete id="deleteFlowById">
         delete from flow
         where id = #{flowId}
         ;

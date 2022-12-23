@@ -9,22 +9,22 @@ import java.io.Serializable;
 /**
  * @date 2022/11/25 10:08
  * @author huangchenguang
- * @desc FlowSearchRequest
+ * @desc FunctionSearchRequest
  */
 @Data
-public class FlowSearchRequest implements Serializable {
+public class FunctionSearchRequest implements Serializable {
 
     /**
      * @date 2022/11/25 10:08
      * @desc serialVersionUID
      */
-    private static final long serialVersionUID = -388164242555291936L;
+    private static final long serialVersionUID = 8224075165097271298L;
 
     /**
      * @date 2022/11/25 15:58
-     * @desc flowName
+     * @desc functionName
      */
-    private String flowName;
+    private String functionName;
 
     /**
      * @date 2022/11/25 16:14

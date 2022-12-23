@@ -13,10 +13,10 @@ create table flow
 -- auto-generated definition
 create table customize_function
 (
-    id           bigint auto_increment comment 'id'
+    id            bigint auto_increment comment 'id'
         primary key,
     function_name varchar(48) not null comment 'function name',
-    script       text        not null comment 'script',
+    script        text        not null comment 'script',
     create_at     bigint      not null comment 'create timestamp',
     update_at     bigint      not null comment 'update timestamp',
     constraint function_name

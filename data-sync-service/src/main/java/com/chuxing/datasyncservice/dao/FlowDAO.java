@@ -49,7 +49,7 @@ public interface FlowDAO {
      * @param flowId flowId
      * @return  flowDTO
      */
-    FlowDTO getFlow(@Param("flowId") Long flowId);
+    FlowDTO getFlowById(@Param("flowId") Long flowId);
 
     /**
      * search flow
@@ -81,7 +81,7 @@ public interface FlowDAO {
      * @param flowId flowId
      * @return delete count number
      */
-    Integer deleteFlow(@Param("flowId") Long flowId);
+    Integer deleteFlowById(@Param("flowId") Long flowId);
 
     /**
      * enable flow

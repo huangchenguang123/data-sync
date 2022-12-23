@@ -18,4 +18,51 @@
         ;
     </select>
 
+    <select id="getFunctionById" resultMap="BaseResultMap">
+        select id, function_name, script, create_at, update_at
+        from customize_function
+        where id = #{functionId}
+        ;
+    </select>
+
+    <select id="searchFunction" resultMap="BaseResultMap">
+        select id, function_name, script, create_at, update_at
+        from customize_function
+        <if test="functionName != null and functionName != ''">
+            where function_name like concat('%', '/' #{functionName}, '%') escape '/'
+        </if>
+        order by update_at
+        limit #{offset}, #{limit}
+        ;
+    </select>
+
+    <select id="countFunction" resultType="java.lang.Integer">
+        select count(1)
+        from customize_function
+        <if test="functionName != null and functionName != ''">
+            where function_name like concat('%', '/' #{functionName}, '%') escape '/'
+        </if>
+        ;
+    </select>
+
+    <insert id="createFunction">
+        insert into customize_function(function_name, script, create_at, update_at)
+        values (#{functionDTO.functionName}, #{functionDTO.script}, #{functionDTO.createAt}, #{functionDTO.updateAt})
+        ;
+    </insert>
+
+    <insert id="updateFunction">
+        update customize_function
+        set function_name = #{functionDTO.functionName},
+            script = #{functionDTO.script},
+            update_at = #{functionDTO.updateAt}
+    </insert>
+
+    <delete id="deleteFunctionById">
+        update customize_function
+        set function_name = #{functionDTO.functionName},
+            script = #{functionDTO.script},
+            update_at = #{functionDTO.updateAt}
+    </delete>
+
 </mapper>

@@ -27,7 +27,7 @@ public class FlowController {
     /**
      * @date 2022/11/24 17:33
      * @author huangchenguang
-     * @desc create flow
+     * @desc get flow
      */
     @RequestMapping("/get")
     public Result<FlowResponse> get(@RequestBody @Valid FlowGetRequest flowRequest) {
@@ -37,7 +37,7 @@ public class FlowController {
     /**
      * @date 2022/11/24 17:33
      * @author huangchenguang
-     * @desc create flow
+     * @desc search flow
      */
     @RequestMapping("/search")
     public Result<Page<FlowResponse>> search(@RequestBody @Valid FlowSearchRequest flowSearchRequest) {
@@ -59,7 +59,7 @@ public class FlowController {
      * @author huangchenguang
      * @desc update flow
      */
-    @RequestMapping("update")
+    @RequestMapping("/update")
     public Result<Boolean> update(@RequestBody @Valid FlowUpdateRequest flowRequest) {
         return Result.success(flowService.update(flowRequest));
     }
