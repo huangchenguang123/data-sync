@@ -1,7 +1,9 @@
 package com.chuxing.datasyncservice.service.component.sink;
 
 import com.alibaba.fastjson2.JSON;
+import com.chuxing.datasyncservice.service.context.Context;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.BooleanUtils;
 
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -47,9 +49,16 @@ public class ConsoleSink extends BaseSink {
      * @param data all data
      */
     @Override
-    public void run(Map<String, Object> data) {
-        if (isRunning.get()) {
-            log.info(JSON.toJSONString(data));
+    public void run(Map<String, Object> data, Context context) {
+        try {
+            if (isRunning.get() && BooleanUtils.isNotFalse(context.getSuccessful())) {
+                log.info(JSON.toJSONString(data));
+            }
+        } catch (Exception e) {
+            context.fail(e.getMessage());
+            throw new RuntimeException(e);
+        } finally {
+            context.countDown();
         }
     }
 

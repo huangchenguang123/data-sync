@@ -3,6 +3,7 @@ package com.chuxing.datasyncservice.service.component.sink;
 import com.alibaba.fastjson2.JSON;
 import com.chuxing.datasyncservice.model.config.ComponentConfig;
 import com.chuxing.datasyncservice.model.enums.SinkEnum;
+import com.chuxing.datasyncservice.service.context.Context;
 import com.chuxing.datasyncservice.service.flow.Flow;
 import lombok.Data;
 
@@ -77,6 +78,6 @@ public abstract class BaseSink {
      * @author huangchenguang
      * @param data all data
      */
-    public abstract void run(Map<String, Object> data);
+    public abstract void run(Map<String, Object> data, Context context);
 
 }

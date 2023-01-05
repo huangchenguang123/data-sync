@@ -1,8 +1,11 @@
 package com.chuxing.datasyncservice.service.run;
 
+import com.alibaba.fastjson2.JSON;
+import com.chuxing.datasyncservice.service.component.channel.BaseChannel;
 import com.chuxing.datasyncservice.service.context.Context;
 import com.chuxing.datasyncservice.service.flow.Flow;
 import com.google.common.collect.Lists;
+import org.apache.commons.lang3.BooleanUtils;
 
 import java.util.List;
 import java.util.Map;
@@ -36,7 +39,7 @@ public class ChannelRunCore {
      * @desc execute first job to thread pool
      */
     public static void execute(Flow flow, Map<String, Object> data, Context context) {
-        List<JobNode> job = initJob(flow, data, context);
+        List<JobNode> job = initJob(flow, data, context, false, null);
         job.forEach(THREAD_POOL_EXECUTOR::execute);
     }
 
@@ -49,22 +52,32 @@ public class ChannelRunCore {
         THREAD_POOL_EXECUTOR.execute(jobNode);
     }
 
+    public static void executeShadow(Flow flow, Map<String, Object> data, Context context, Map<String, Object> trueData) {
+        List<JobNode> job = initJob(flow, data, context, true, trueData);
+        job.forEach(THREAD_POOL_EXECUTOR::execute);
+    }
+
     /**
      * @date 2022/11/10 16:25
      * @author huangchenguang
      * @desc init job
      */
-    private static List<JobNode> initJob(Flow flow, Map<String, Object> data, Context context) {
+    @SuppressWarnings("unchecked")
+    private static List<JobNode> initJob(Flow flow, Map<String, Object> data, Context context, Boolean isShadow, Map<String, Object> trueData) {
+        Map<Integer, BaseChannel> channelsMap = BooleanUtils.isNotTrue(isShadow) ? flow.getBaseChannels() : flow.getShadowChannels();
         // init jobNodeMap
-        Map<Integer, JobNode> jobNodeMap = flow.getBaseChannels().values().stream().map(baseChannel -> {
+        Map<Integer, JobNode> jobNodeMap = channelsMap.values().stream().map(baseChannel -> {
             JobNode jobNode = new JobNode();
             jobNode.setBaseChannel(baseChannel);
-            jobNode.setData(data);
+            jobNode.setData(JSON.parseObject(JSON.toJSONString(data), Map.class));
+            jobNode.setInput(data);
             jobNode.setContext(context);
+            jobNode.setIsShadow(isShadow);
+            jobNode.setTrueData(trueData);
             return jobNode;
         }).collect(Collectors.toMap(jobNode -> jobNode.getBaseChannel().getId(), Function.identity(), (a, b) -> a));
         // init preJobNodes and nextJobNodes
-        flow.getBaseChannels().values().forEach(baseChannel -> {
+        channelsMap.values().forEach(baseChannel -> {
             // init preJobNodes
             List<JobNode> preJobNodes = Lists.newArrayList();
             baseChannel.getPreChannelIds().forEach(preChannelId -> preJobNodes.add(jobNodeMap.get(preChannelId)));

@@ -90,6 +90,12 @@ public class FlowManager {
             BaseChannel baseChannel = BaseChannel.init(config);
             channels.put(baseChannel.getId(), baseChannel);
         }
+        // init channels
+        Map<Integer, BaseChannel> shadowChannels = Maps.newConcurrentMap();
+        for (ChannelConfig config : flowConfig.getShadowChannels()) {
+            BaseChannel baseChannel = BaseChannel.init(config);
+            shadowChannels.put(baseChannel.getId(), baseChannel);
+        }
         // init sinks
         Map<Integer, BaseSink> sinks = Maps.newConcurrentMap();
         for (ComponentConfig config : flowConfig.getSinks()) {
@@ -97,7 +103,7 @@ public class FlowManager {
             sinks.put(baseSink.getId(), baseSink);
         }
         // init flow
-        Flow flow = new Flow(flowDTO.getFlowName(), sources, channels, sinks);
+        Flow flow = new Flow(flowDTO.getFlowName(), sources, channels, shadowChannels, sinks);
         flowMap.put(flow.getFlowName(), flow);
     }
 

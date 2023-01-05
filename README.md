@@ -12,6 +12,6 @@ npm run dev
 
 ## todo
 1. front and other api server
-2. dynamic shunt and shadow mode
+2. dynamic shunt
 3. add more component
 4. UT

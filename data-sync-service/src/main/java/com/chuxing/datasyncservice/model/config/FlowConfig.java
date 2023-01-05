@@ -37,6 +37,12 @@ public class FlowConfig implements Serializable {
 
     /**
      * @date 2022/10/28 14:20
+     * @desc channels
+     */
+    private List<ChannelConfig> shadowChannels;
+
+    /**
+     * @date 2022/10/28 14:20
      * @desc sinks
      */
     private List<ComponentConfig> sinks;

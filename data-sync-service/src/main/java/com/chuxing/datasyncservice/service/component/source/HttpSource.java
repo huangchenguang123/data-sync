@@ -27,6 +27,13 @@ public class HttpSource extends BaseSource {
     private Boolean async;
 
     /**
+     * @date 2023/1/5 14:37
+     * @author huangchenguang
+     * @desc timeout
+     */
+    private Long timeout;
+
+    /**
      * @date 2022/12/16 15:39
      * @author huangchenguang
      * @desc start

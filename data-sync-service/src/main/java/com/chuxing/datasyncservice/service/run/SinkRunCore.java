@@ -35,7 +35,8 @@ public class SinkRunCore {
      * @desc execute
      */
     public static void execute(Flow flow, Map<String, Object> data, Context context) {
-        flow.getBaseSinks().values().forEach(baseSink -> THREAD_POOL_EXECUTOR.execute(() -> baseSink.run(data)));
+        context.initCountDownLatch(flow.getBaseSinks().size());
+        flow.getBaseSinks().values().forEach(baseSink -> THREAD_POOL_EXECUTOR.execute(() -> baseSink.run(data, context)));
         context.success(data);
     }
 

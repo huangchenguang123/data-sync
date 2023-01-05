@@ -1,10 +1,12 @@
 package com.chuxing.datasyncservice.service.component.sink;
 
 import com.alibaba.fastjson2.JSON;
+import com.chuxing.datasyncservice.service.context.Context;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import okhttp3.*;
+import org.apache.commons.lang3.BooleanUtils;
 
 import java.util.Map;
 import java.util.Objects;
@@ -65,23 +67,31 @@ public class HttpSink extends BaseSink {
      * @desc run
      */
     @Override
-    public void run(Map<String, Object> data) {
-        if (isRunning.get()) {
-            RequestBody body = RequestBody.create(JSON.toJSONString(data), MediaType.parse("application/json; charset=utf-8"));
-            Request request = new Request.Builder()
-                    .url(url)
-                    .post(body)
-                    .build();
+    public void run(Map<String, Object> data, Context context) {
+        try {
+            if (isRunning.get() && BooleanUtils.isNotFalse(context.getSuccessful())) {
+                RequestBody body = RequestBody.create(JSON.toJSONString(data), MediaType.parse("application/json; charset=utf-8"));
+                Request request = new Request.Builder()
+                        .url(url)
+                        .post(body)
+                        .build();
 
-            try (Response response = okHttpClient.newCall(request).execute()) {
-                ResponseBody responseBody = response.body();
-                if (Objects.nonNull(responseBody)) {
-                    log.info("[HttpSink.run] post http, url={}, params={}, result={}", url, JSON.toJSONString(data), responseBody.string());
+                try (Response response = okHttpClient.newCall(request).execute()) {
+                    ResponseBody responseBody = response.body();
+                    if (Objects.nonNull(responseBody)) {
+                        log.info("[HttpSink.run] post http, url={}, params={}, result={}", url, JSON.toJSONString(data), responseBody.string());
+                    }
+                } catch (Exception e) {
+                    log.error("[HttpSink.run] post http, url={}, params={}", url, JSON.toJSONString(data), e);
                 }
-            } catch (Exception e) {
-                log.error("[HttpSink.run] post http, url={}, params={}", url, JSON.toJSONString(data), e);
             }
+        } catch (Exception e) {
+            context.fail(e.getMessage());
+            throw new RuntimeException(e);
+        } finally {
+            context.countDown();
         }
+
     }
 
 }

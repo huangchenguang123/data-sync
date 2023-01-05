@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.PostConstruct;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * @date 2022/12/16 15:26
@@ -53,10 +54,17 @@ public class HttpSourceRunCore {
                 return Result.success(true);
             } else {
                 source.run(data, context);
-                while (BooleanUtils.isNotTrue(context.getSuccessful())) {
+                while (Objects.isNull(context.getSuccessful())) {
+                    if (System.currentTimeMillis() - context.getStartTimes() > source.getTimeout()) {
+                        return Result.fail("time out");
+                    }
                     ThreadUtils.sleep(10L);
                 }
-                return Result.success(context.getResult());
+                if (BooleanUtils.isTrue(context.getSuccessful())) {
+                    return Result.success(context.getResult());
+                } else {
+                    return Result.fail(String.valueOf(context.getResult()));
+                }
             }
         } else {
             return Result.fail("please check your url");

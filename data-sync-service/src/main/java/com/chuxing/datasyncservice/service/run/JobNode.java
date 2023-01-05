@@ -1,8 +1,13 @@
 package com.chuxing.datasyncservice.service.run;
 
+import com.alibaba.fastjson2.JSON;
 import com.chuxing.datasyncservice.service.component.channel.BaseChannel;
 import com.chuxing.datasyncservice.service.context.Context;
+import com.chuxing.datasyncservice.utils.JsonUtils;
 import lombok.Data;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.collections4.MapUtils;
+import org.apache.commons.lang3.BooleanUtils;
 
 import java.util.List;
 import java.util.Map;
@@ -12,6 +17,7 @@ import java.util.Map;
  * @author huangchenguang
  * @desc JobNode
  */
+@Slf4j
 @Data
 public class JobNode implements Runnable {
 
@@ -34,6 +40,12 @@ public class JobNode implements Runnable {
     private BaseChannel baseChannel;
 
     /**
+     * @date 2023/1/5 15:30
+     * @desc input
+     */
+    private Map<String, Object> input;
+
+    /**
      * @date 2022/11/10 16:06
      * @desc data
      */
@@ -52,6 +64,20 @@ public class JobNode implements Runnable {
     private List<JobNode> remainingJobNodes;
 
     /**
+     * @date 2023/1/5 15:03
+     * @author huangchenguang
+     * @desc is shadow
+     */
+    private Boolean isShadow;
+
+    /**
+     * @date 2023/1/5 15:04
+     * @author huangchenguang
+     * @desc shadowData
+     */
+    private Map<String, Object> trueData;
+
+    /**
      * @date 2022/11/10 16:32
      * @author huangchenguang
      * @desc run
@@ -59,25 +85,37 @@ public class JobNode implements Runnable {
     @Override
     @SuppressWarnings("all")
     public void run() {
-        if (preJobNodes.isEmpty()) {
-            baseChannel.run(data);
-            // remove myself from remainingJobNodes
-            synchronized(remainingJobNodes) {
-                remainingJobNodes.remove(this);
-                if (remainingJobNodes.isEmpty()) {
-                    SinkRunCore.execute(baseChannel.getFlow(), data, context);
-                }
-            }
-            // remove myself from next job node and execute
-            nextJobNodes.forEach(nextJobNode -> {
-                // prevent duplicate submissions
-                synchronized (data) {
-                    nextJobNode.getPreJobNodes().remove(this);
-                    if (nextJobNode.getPreJobNodes().isEmpty()) {
-                        ChannelRunCore.execute(nextJobNode);
+        try {
+            if (preJobNodes.isEmpty()) {
+                baseChannel.run(data);
+                // remove myself from remainingJobNodes
+                synchronized(remainingJobNodes) {
+                    remainingJobNodes.remove(this);
+                    if (remainingJobNodes.isEmpty()) {
+                        if (BooleanUtils.isTrue(isShadow)) {
+                            String result = JsonUtils.diffView(JSON.toJSONString(trueData), JSON.toJSONString(data));
+                            log.info("json diff result={}", result);
+                        } else {
+                            SinkRunCore.execute(baseChannel.getFlow(), data, context);
+                            if (MapUtils.isNotEmpty(baseChannel.getFlow().getShadowChannels())) {
+                                ChannelRunCore.executeShadow(baseChannel.getFlow(), input, Context.init(), data);
+                            }
+                        }
                     }
                 }
-            });
+                // remove myself from next job node and execute
+                nextJobNodes.forEach(nextJobNode -> {
+                    // prevent duplicate submissions
+                    synchronized (data) {
+                        nextJobNode.getPreJobNodes().remove(this);
+                        if (nextJobNode.getPreJobNodes().isEmpty()) {
+                            ChannelRunCore.execute(nextJobNode);
+                        }
+                    }
+                });
+            }
+        } catch (Exception e) {
+            context.fail(e.getMessage());
         }
     }
 

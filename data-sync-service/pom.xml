@@ -29,6 +29,8 @@
         <gson.version>2.10</gson.version>
         <validation.version>2.0.1.Final</validation.version>
         <okhttp.version>4.10.0</okhttp.version>
+        <collections4.version>4.4</collections4.version>
+        <json-diff.version>1.0.0</json-diff.version>
     </properties>
 
     <dependencies>
@@ -110,6 +112,18 @@
             <groupId>com.squareup.okhttp3</groupId>
             <artifactId>okhttp</artifactId>
             <version>${okhttp.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-collections4</artifactId>
+            <version>${collections4.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.ke.diff</groupId>
+            <artifactId>json-diff</artifactId>
+            <version>${json-diff.version}</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/libs/json-diff-1.0.0.jar</systemPath>
         </dependency>
     </dependencies>
 

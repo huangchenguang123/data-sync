@@ -78,7 +78,11 @@ public abstract class BaseSource {
      * @desc source run
      */
     public void run(Map<String, Object> data, Context context) {
-        ChannelRunCore.execute(flow, data, context);
+        try {
+            ChannelRunCore.execute(flow, data, context);
+        } catch (Exception e) {
+            context.fail(e.getMessage());
+        }
     }
 
 }
