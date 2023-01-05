@@ -25,14 +25,15 @@ public class ObjectUtils {
         Object current = data;
         for (int i = 0; i < names.length; i++) {
             try {
-                if (!((Map<String, Object>) current).containsKey(names[i])) {
-                    if (i == names.length - 1) {
-                        ((Map<String, Object>) current).put(names[i], value);
-                    } else {
+                if (i == names.length - 1) {
+                    ((Map<String, Object>) current).put(names[i], value);
+                } else {
+                    if (!((Map<String, Object>) current).containsKey(names[i])) {
                         ((Map<String, Object>) current).put(names[i], Maps.newHashMap());
+                    } else {
+                        current = ((Map<String, Object>) current).get(names[i]);
                     }
                 }
-                current = ((Map<String, Object>) current).get(names[i]);
             } catch (Exception e) {
                 log.error("[ObjectUtils.set] set error, current must be a map, current={}", current);
                 throw new RuntimeException(e.getCause());
