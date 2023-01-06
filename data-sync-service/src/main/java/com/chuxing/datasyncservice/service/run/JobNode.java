@@ -78,6 +78,13 @@ public class JobNode implements Runnable {
     private Map<String, Object> trueData;
 
     /**
+     * @date 2023/1/6 09:59
+     * @author huangchenguang
+     * @desc isSwitch
+     */
+    private Boolean isSwitch;
+
+    /**
      * @date 2022/11/10 16:32
      * @author huangchenguang
      * @desc run
@@ -93,12 +100,16 @@ public class JobNode implements Runnable {
                     remainingJobNodes.remove(this);
                     if (remainingJobNodes.isEmpty()) {
                         if (BooleanUtils.isTrue(isShadow)) {
-                            String result = JsonUtils.diffView(JSON.toJSONString(trueData), JSON.toJSONString(data));
-                            log.info("json diff result={}", result);
+                            if (BooleanUtils.isNotTrue(isSwitch)) {
+                                String result = JsonUtils.diffView(JSON.toJSONString(trueData), JSON.toJSONString(data));
+                                log.info("json diff result={}", result);
+                            } else {
+                                SinkRunCore.execute(baseChannel.getFlow(), data, context);
+                            }
                         } else {
                             SinkRunCore.execute(baseChannel.getFlow(), data, context);
                             if (MapUtils.isNotEmpty(baseChannel.getFlow().getShadowChannels())) {
-                                ChannelRunCore.executeShadow(baseChannel.getFlow(), input, Context.init(), data);
+                                ChannelRunCore.executeShadow(baseChannel.getFlow(), input, Context.init(), data, false);
                             }
                         }
                     }

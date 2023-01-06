@@ -47,4 +47,11 @@ public class FlowConfig implements Serializable {
      */
     private List<ComponentConfig> sinks;
 
+    /**
+     * @date 2023/1/6 09:45
+     * @author huangchenguang
+     * @desc switchRate
+     */
+    private Integer switchRate;
+
 }

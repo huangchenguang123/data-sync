@@ -45,7 +45,14 @@ public class Flow {
      */
     private final Map<Integer, BaseSink> baseSinks;
 
-    public Flow(String flowName, Map<Integer, BaseSource> baseSources, Map<Integer, BaseChannel> baseChannels, Map<Integer, BaseChannel> shadowChannels, Map<Integer, BaseSink> baseSinks) {
+    /**
+     * @date 2023/1/6 09:45
+     * @author huangchenguang
+     * @desc switchRate
+     */
+    private Integer switchRate;
+
+    public Flow(String flowName, Map<Integer, BaseSource> baseSources, Map<Integer, BaseChannel> baseChannels, Map<Integer, BaseChannel> shadowChannels, Map<Integer, BaseSink> baseSinks, Integer switchRate) {
         this.flowName = flowName;
         this.baseSources = baseSources;
         baseSources.values().forEach(baseSource -> baseSource.setFlow(this));
@@ -55,6 +62,7 @@ public class Flow {
         shadowChannels.values().forEach(baseChannel -> baseChannel.setFlow(this));
         this.baseSinks = baseSinks;
         baseSinks.values().forEach(baseSink -> baseSink.setFlow(this));
+        this.switchRate = switchRate;
     }
 
     /**

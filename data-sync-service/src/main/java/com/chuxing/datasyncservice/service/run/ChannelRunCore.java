@@ -39,7 +39,7 @@ public class ChannelRunCore {
      * @desc execute first job to thread pool
      */
     public static void execute(Flow flow, Map<String, Object> data, Context context) {
-        List<JobNode> job = initJob(flow, data, context, false, null);
+        List<JobNode> job = initJob(flow, data, context, false, null, false);
         job.forEach(THREAD_POOL_EXECUTOR::execute);
     }
 
@@ -52,8 +52,13 @@ public class ChannelRunCore {
         THREAD_POOL_EXECUTOR.execute(jobNode);
     }
 
-    public static void executeShadow(Flow flow, Map<String, Object> data, Context context, Map<String, Object> trueData) {
-        List<JobNode> job = initJob(flow, data, context, true, trueData);
+    /**
+     * @date 2023/1/6 09:41
+     * @author huangchenguang
+     * @desc execute shadow job to thread pool
+     */
+    public static void executeShadow(Flow flow, Map<String, Object> data, Context context, Map<String, Object> trueData, Boolean isSwitch) {
+        List<JobNode> job = initJob(flow, data, context, true, trueData, isSwitch);
         job.forEach(THREAD_POOL_EXECUTOR::execute);
     }
 
@@ -63,7 +68,7 @@ public class ChannelRunCore {
      * @desc init job
      */
     @SuppressWarnings("unchecked")
-    private static List<JobNode> initJob(Flow flow, Map<String, Object> data, Context context, Boolean isShadow, Map<String, Object> trueData) {
+    private static List<JobNode> initJob(Flow flow, Map<String, Object> data, Context context, Boolean isShadow, Map<String, Object> trueData, Boolean isSwitch) {
         Map<Integer, BaseChannel> channelsMap = BooleanUtils.isNotTrue(isShadow) ? flow.getBaseChannels() : flow.getShadowChannels();
         // init jobNodeMap
         Map<Integer, JobNode> jobNodeMap = channelsMap.values().stream().map(baseChannel -> {
@@ -74,6 +79,7 @@ public class ChannelRunCore {
             jobNode.setContext(context);
             jobNode.setIsShadow(isShadow);
             jobNode.setTrueData(trueData);
+            jobNode.setIsSwitch(isSwitch);
             return jobNode;
         }).collect(Collectors.toMap(jobNode -> jobNode.getBaseChannel().getId(), Function.identity(), (a, b) -> a));
         // init preJobNodes and nextJobNodes

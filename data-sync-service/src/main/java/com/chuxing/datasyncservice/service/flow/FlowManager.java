@@ -103,7 +103,7 @@ public class FlowManager {
             sinks.put(baseSink.getId(), baseSink);
         }
         // init flow
-        Flow flow = new Flow(flowDTO.getFlowName(), sources, channels, shadowChannels, sinks);
+        Flow flow = new Flow(flowDTO.getFlowName(), sources, channels, shadowChannels, sinks, flowConfig.getSwitchRate());
         flowMap.put(flow.getFlowName(), flow);
     }
 

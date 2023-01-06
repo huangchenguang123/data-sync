@@ -10,6 +10,7 @@ import lombok.Data;
 
 import java.util.Map;
 import java.util.Objects;
+import java.util.Random;
 
 /**
  * @date 2022/10/20 17:16
@@ -79,10 +80,24 @@ public abstract class BaseSource {
      */
     public void run(Map<String, Object> data, Context context) {
         try {
-            ChannelRunCore.execute(flow, data, context);
+            if (isSwitch(flow.getSwitchRate())) {
+                ChannelRunCore.executeShadow(flow, data, context, data, true);
+            } else {
+                ChannelRunCore.execute(flow, data, context);
+            }
         } catch (Exception e) {
             context.fail(e.getMessage());
         }
+    }
+
+    /**
+     * @date 2023/1/6 09:51
+     * @author huangchenguang
+     * @desc choose switch
+     */
+    private boolean isSwitch(Integer switchRate) {
+        Random random = new Random();
+        return switchRate > random.nextInt(100);
     }
 
 }
