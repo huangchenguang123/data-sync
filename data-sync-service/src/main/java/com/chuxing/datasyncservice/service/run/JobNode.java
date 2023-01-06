@@ -102,7 +102,7 @@ public class JobNode implements Runnable {
                         if (BooleanUtils.isTrue(isShadow)) {
                             if (BooleanUtils.isNotTrue(isSwitch)) {
                                 String result = JsonUtils.diffView(JSON.toJSONString(trueData), JSON.toJSONString(data));
-                                log.info("json diff result={}", result);
+                                log.info("[JobNode.run] shadow mode run, result is different, json diff result={}", result);
                             } else {
                                 SinkRunCore.execute(baseChannel.getFlow(), data, context);
                             }
