@@ -14,3 +14,4 @@ npm run dev
 1. front and other api server
 2. add more component
 3. UT
+4. add http channel, fix http sink param
